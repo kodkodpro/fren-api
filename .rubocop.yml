@@ -1,8 +1,237 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+require:
+  - operandi/rubocop
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+plugins:
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-sane
+  - rubocop-sorbet
+  - rubocop-thread_safety
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 4.0
+  TargetRailsVersion: 8.1
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Exclude:
+    - "bin/**/*"
+    - "sorbet/**/*.rbi"
+    - "db/schema.rb"
+
+Sane/DisallowMethods:
+  ReplaceMethods:
+    deliver_now:
+      with: deliver_later
+      reason: "`deliver_later` sends the email via background job"
+    perform_sync:
+      with: run_async
+      reason: "`run_async` processes the job asynchronously and validates the arguments"
+    perform_async:
+      with: run_async
+      reason: "`run_async` validates the arguments before enqueuing it"
+    perform_at:
+      with: run_at
+      reason: "`run_at` validates the arguments before enqueuing it"
+    perform_in:
+      with: run_in
+      reason: "`run_in` validates the arguments before enqueuing it"
+  ProhibitedMethods:
+    dangerous_method:
+      reason: "dangerous methods aren't allowed"
+
+Operandi/OutputTypeRequired:
+  Enabled: false
+
+Sorbet/BlockMethodDefinition:
+  Exclude:
+    - "lib/tasks/**/*.rake"
+    - "spec/**/*"
+
+Rails:
+  Enabled: true
+
+Rails/Blank:
+  SafeAutoCorrect: true
+
+Rails/I18nLocaleTexts:
+  Enabled: false
+
+Rails/Output:
+  Exclude:
+    - "db/**/*"
+    - "lib/spotter/cli.rb"
+    - "lib/spotter/cli/**/*"
+
+Rails/Exit:
+  Exclude:
+    - "bin/**/*"
+    - "lib/command.rb"
+    - "lib/spotter/cli.rb"
+    - "lib/spotter/cli/**/*"
+
+# We're using monkey patching to add the dependent: :destroy to all has_many associations
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/DeprecatedActiveModelErrorsMethods:
+  Exclude:
+    - "spec/**/*"
+
+Metrics/ModuleLength:
+  Exclude:
+    - "config/environments/*.rb"
+
+Naming/VariableNumber:
+  AllowedIdentifiers:
+    - dots_2
+    - address_1
+    - address_2
+
+# This one is disabled for better compatibility with our TypeScript codebase
+Naming/PredicateMethod:
+  Enabled: false
+
+Naming/PredicatePrefix:
+  Enabled: false
+
+Naming/MethodParameterName:
+  AllowedNames:
+    - id
+    - to
+    - is
+    - tz
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+  AllowMultilineFinalElement: true
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+  AllowMultilineFinalElement: true
+
+Layout/FirstMethodParameterLineBreak:
+  Enabled: true
+  AllowMultilineFinalElement: true
+
+Layout/MultilineMethodParameterLineBreaks:
+  Enabled: true
+  AllowMultilineFinalElement: true
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+  AllowMultilineFinalElement: true
+
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+  AllowMultilineFinalElement: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/EmptyStringInsideInterpolation:
+  EnforcedStyle: ternary
+
+Style/FrozenStringLiteralComment:
+  SafeAutoCorrect: true
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: diff_comma
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+# TODO: Enable this rule when we create env file
+Style/FetchEnvVar:
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+# Disabled in favor of Sane/ConditionalAssignmentAllowTernary
+Style/ConditionalAssignment:
+  Enabled: false
+
+Style/TrailingUnderscoreVariable:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/NestedTernaryOperator:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+  EnforcedShorthandSyntax: always
+
+Style/HashAsLastArrayItem:
+  EnforcedStyle: no_braces
+
+Style/SafeNavigationChainLength:
+  Max: 5
+
+Style/BlockDelimiters:
+  Exclude:
+    - "spec/**/*"
+Lint/EmptyBlock:
+  Exclude:
+    - "spec/**/*"
+
+Lint/UselessAssignment:
+  AutoCorrect: false
+
+# Sorry for disabling these rules =(
+# I believe that one day we'll enable them back
+Layout/LineLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false

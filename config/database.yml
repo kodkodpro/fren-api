@@ -80,6 +80,3 @@ test:
 #
 production:
   <<: *default
-  database: momo_production
-  username: momo
-  password: <%= ENV["MOMO_DATABASE_PASSWORD"] %>
