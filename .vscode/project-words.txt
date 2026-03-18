@@ -1,7 +1,12 @@
 akodkod
 annotaterb
 autocorrection
+bootsnap
 dotenv
+jemalloc
+Kamal
+libjemalloc
+libvips
 memery
 Momo
 pidfile
