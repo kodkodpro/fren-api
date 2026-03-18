@@ -37,10 +37,18 @@ Rails 8.1 API-only app (Ruby 4.0.1, PostgreSQL) that serves as a reverse proxy f
 - **memery** — memoization (included in `ApplicationController`)
 - **operandi** — service object pattern (github: akodkod/operandi)
 - **rubocop-sane** — custom RuboCop rules (github: akodkod/rubocop-sane)
+- **spy** — test spies/mocks; custom assertions in `test/support/spy.rb`
 
 ### Environment config
 
 Typed env vars live in `lib/env.rb` as a `T::Struct` called `EnvConfig`. Access via the `Env` constant (e.g., `Env.openai_api_key`). Add new env vars there as typed properties.
+
+## Testing
+
+Support files in `test/support/` are auto-loaded. Custom assertions available:
+
+- `assert_spy_called(spy)` — asserts the spy was called at least once
+- `assert_spy_not_called(spy)` — asserts the spy was never called
 
 ## Code style
 

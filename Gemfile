@@ -29,14 +29,17 @@ group :development, :test do
   gem "bundle_update_interactive", "0.13.1"
   gem "debug", "1.11.1"
   gem "dotenv", "3.2.0"
+  gem "minitest", "6.0.2"
   gem "rubocop", "1.85.1", require: false
   gem "rubocop-capybara", "2.22.1", require: false
   gem "rubocop-factory_bot", "2.28.0", require: false
+  gem "rubocop-minitest", "0.39.1", require: false
   gem "rubocop-performance", "1.26.1", require: false
   gem "rubocop-rails", "2.34.3", require: false
   gem "rubocop-sane", github: "akodkod/rubocop-sane", require: false
   gem "rubocop-sorbet", "0.12.0", require: false
   gem "rubocop-thread_safety", "0.7.3", require: false
   gem "ruby-lsp", "0.26.8"
+  gem "spy", "1.0.5", require: false
   gem "webmock", "3.26.2", require: false
 end

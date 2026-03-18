@@ -30194,6 +30194,13 @@ module RuboCop::Cop::MinBranchesCount
   def min_branches_count?(node); end
 end
 
+module RuboCop::Cop::Minitest; end
+
+class RuboCop::Cop::Minitest::MultipleAssertions < ::RuboCop::Cop::Base
+  include ::RuboCop::Cop::VisibilityHelp
+  include ::RuboCop::Cop::DefNode
+end
+
 # Common code for indenting the first elements in multiline
 # array literals, hash literals, and method definitions.
 #
@@ -63609,10 +63616,10 @@ RuboCop::Formatter::PacmanFormatter::FALLBACK_TERMINAL_WIDTH = T.let(T.unsafe(ni
 RuboCop::Formatter::PacmanFormatter::GHOST = T.let(T.unsafe(nil), String)
 
 # pkg:gem/rubocop#lib/rubocop/formatter/pacman_formatter.rb:18
-RuboCop::Formatter::PacmanFormatter::PACDOT = T.let(T.unsafe(nil), Rainbow::Presenter)
+RuboCop::Formatter::PacmanFormatter::PACDOT = T.let(T.unsafe(nil), Rainbow::NullPresenter)
 
 # pkg:gem/rubocop#lib/rubocop/formatter/pacman_formatter.rb:17
-RuboCop::Formatter::PacmanFormatter::PACMAN = T.let(T.unsafe(nil), Rainbow::Presenter)
+RuboCop::Formatter::PacmanFormatter::PACMAN = T.let(T.unsafe(nil), Rainbow::NullPresenter)
 
 # This formatter display dots for files with no offenses and
 # letters for files with problems in the them. In the end it

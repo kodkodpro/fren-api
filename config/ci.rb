@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-# Run using bin/ci
+require "sorbet-runtime"
 
 CI.run do
   T.bind(self, T.all(CI, Object))

@@ -5,6 +5,7 @@ plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-performance
+  - rubocop-minitest
   - rubocop-rails
   - rubocop-sane
   - rubocop-sorbet

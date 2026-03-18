@@ -7,3 +7,4 @@ Momo
 pidfile
 pids
 rubocop
+shoulda

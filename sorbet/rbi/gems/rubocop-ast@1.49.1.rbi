@@ -1037,6 +1037,9 @@ module RuboCop::AST::CollectionNode
   def reverse_each(*_arg0, **_arg1, &_arg2); end
 
   # pkg:gem/rubocop-ast#lib/rubocop/ast/node/mixin/collection_node.rb:13
+  def rfind(*_arg0, **_arg1, &_arg2); end
+
+  # pkg:gem/rubocop-ast#lib/rubocop/ast/node/mixin/collection_node.rb:13
   def rindex(*_arg0, **_arg1, &_arg2); end
 
   # pkg:gem/rubocop-ast#lib/rubocop/ast/node/mixin/collection_node.rb:13
@@ -5801,7 +5804,7 @@ RuboCop::AST::NodePattern::Sets::SET_MATCH_MATCH = T.let(T.unsafe(nil), Set)
 RuboCop::AST::NodePattern::Sets::SET_MATCH_MATCH_ = T.let(T.unsafe(nil), Set)
 
 # pkg:gem/rubocop-ast#lib/rubocop/ast/node_pattern/sets.rb:10
-RuboCop::AST::NodePattern::Sets::SET_MATCH__MATCH = T.let(T.unsafe(nil), Set)
+RuboCop::AST::NodePattern::Sets::SET_MATCH_MATCH__2 = T.let(T.unsafe(nil), Set)
 
 # pkg:gem/rubocop-ast#lib/rubocop/ast/node_pattern/sets.rb:10
 RuboCop::AST::NodePattern::Sets::SET_MATCH___MATCH = T.let(T.unsafe(nil), Set)
