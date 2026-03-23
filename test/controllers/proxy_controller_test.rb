@@ -13,7 +13,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "#{@openai_base}/v1/models")
       .to_return(status: 200, body: '{"data":[]}', headers: { "Content-Type" => "application/json" })
 
-    get proxy_openai_url(path: "v1/models")
+    get proxy_openai_url(path: "v1/models"), headers: auth_headers
 
     assert_response :success
     assert_equal '{"data":[]}', response.body
@@ -28,7 +28,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
 
     post proxy_openai_url(path: "v1/chat/completions"),
          params: request_body,
-         headers: { "Content-Type" => "application/json" }
+         headers: auth_headers.merge("Content-Type" => "application/json")
 
     assert_response :success
     assert_equal '{"choices":[]}', response.body
@@ -39,7 +39,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       .with(headers: { "Authorization" => "Bearer #{@openai_key}" })
       .to_return(status: 200, body: "{}")
 
-    get proxy_openai_url(path: "v1/models")
+    get proxy_openai_url(path: "v1/models"), headers: auth_headers
 
     assert_response :success
   end
@@ -50,7 +50,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
 
     put proxy_openai_url(path: "v1/some/resource"),
         params: '{"name":"test"}',
-        headers: { "Content-Type" => "application/json" }
+        headers: auth_headers.merge("Content-Type" => "application/json")
 
     assert_response :success
   end
@@ -61,7 +61,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
 
     patch proxy_openai_url(path: "v1/some/resource"),
           params: '{"name":"test"}',
-          headers: { "Content-Type" => "application/json" }
+          headers: auth_headers.merge("Content-Type" => "application/json")
 
     assert_response :success
   end
@@ -70,7 +70,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     stub_request(:delete, "#{@openai_base}/v1/some/resource")
       .to_return(status: 200, body: '{"deleted":true}')
 
-    delete proxy_openai_url(path: "v1/some/resource")
+    delete proxy_openai_url(path: "v1/some/resource"), headers: auth_headers
 
     assert_response :success
   end
@@ -80,7 +80,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
       .with(query: { "limit" => "5", "order" => "desc" })
       .to_return(status: 200, body: '{"data":[]}')
 
-    get proxy_openai_url(path: "v1/models"), params: { limit: 5, order: "desc" }
+    get proxy_openai_url(path: "v1/models"), params: { limit: 5, order: "desc" }, headers: auth_headers
 
     assert_response :success
   end
@@ -89,7 +89,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "#{@openai_base}/v1/models")
       .to_return(status: 401, body: '{"error":"unauthorized"}')
 
-    get proxy_openai_url(path: "v1/models")
+    get proxy_openai_url(path: "v1/models"), headers: auth_headers
 
     assert_response :unauthorized
   end
@@ -98,7 +98,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "#{@openai_base}/v1/models")
       .to_return(status: 500, body: '{"error":"internal server error"}')
 
-    get proxy_openai_url(path: "v1/models")
+    get proxy_openai_url(path: "v1/models"), headers: auth_headers
 
     assert_response :internal_server_error
   end

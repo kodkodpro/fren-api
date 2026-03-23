@@ -4,6 +4,10 @@
 
 # typed: false
 
+class ApplicationRecord
+  def self.nilify_blanks; end
+end
+
 module ActionMailer::Base::Mail::Message; end
 module ActionMailer::Collector; end
 module ActiveJob::Exceptions::JITTER_DEFAULT; end

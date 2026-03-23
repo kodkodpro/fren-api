@@ -9,6 +9,7 @@ libjemalloc
 libvips
 memery
 Momo
+nilify
 pidfile
 pids
 rubocop

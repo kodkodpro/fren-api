@@ -51,6 +51,15 @@ Sorbet/BlockMethodDefinition:
     - "lib/tasks/**/*.rake"
     - "spec/**/*"
 
+Sorbet/TrueSigil:
+  Enabled: true
+
+Sorbet/FalseSigil:
+  Enabled: false
+
+Minitest/MultipleAssertions:
+  Max: 10
+
 Rails:
   Enabled: true
 

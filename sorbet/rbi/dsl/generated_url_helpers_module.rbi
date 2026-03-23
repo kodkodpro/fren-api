@@ -10,6 +10,9 @@ module GeneratedUrlHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def feedbacks_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def proxy_openai_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

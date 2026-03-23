@@ -10,6 +10,9 @@ module GeneratedPathHelpersModule
   include ::ActionDispatch::Routing::PolymorphicRoutes
 
   sig { params(args: T.untyped).returns(String) }
+  def feedbacks_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def proxy_openai_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

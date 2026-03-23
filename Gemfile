@@ -7,6 +7,7 @@ gem "rails", "8.1.2"
 gem "bootsnap", "1.23.0", require: false
 gem "jbuilder", "2.14.1"
 gem "memery", "1.8.0"
+gem "nilify_blanks", "1.4"
 gem "operandi", github: "akodkod/operandi"
 gem "pg", "1.6.3"
 gem "puma", "7.2.0"
@@ -28,6 +29,8 @@ group :development, :test do
   gem "bundle_update_interactive", "0.13.1"
   gem "debug", "1.11.1"
   gem "dotenv", "3.2.0"
+  gem "factory_bot", "6.5.6"
+  gem "faker", "3.6.1"
   gem "minitest", "6.0.2"
   gem "rubocop", "1.85.1", require: false
   gem "rubocop-capybara", "2.22.1", require: false

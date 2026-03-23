@@ -4,6 +4,7 @@
 --allowed-extension=.rbi
 --allowed-extension=.rake
 --ignore=tmp/
+--ignore=test/factories
 --ignore=vendor/
 --enable-all-beta-lsp-features
 --enable-experimental-requires-ancestor
