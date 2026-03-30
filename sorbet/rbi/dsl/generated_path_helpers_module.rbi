@@ -31,6 +31,9 @@ module GeneratedPathHelpersModule
   def rails_info_routes_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def remote_config_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def root_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

@@ -8,6 +8,7 @@ class ApplicationRecord
   def self.nilify_blanks; end
 end
 
+module ::ConnectionPool::ForkTracker; end
 module ActionMailer::Base::Mail::Message; end
 module ActionMailer::Collector; end
 module ActiveJob::Exceptions::JITTER_DEFAULT; end

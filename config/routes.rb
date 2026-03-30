@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   # Feedback
   resources :feedbacks, only: [:create]
 
+  # Remote Config
+  get "remote-config", to: "remote_config#show", as: :remote_config
+
   # Health
   get "up", to: "health#index", as: :rails_health_check
   get "health/trigger-sentry-error", to: "health#trigger_sentry_error", as: :trigger_sentry_error
