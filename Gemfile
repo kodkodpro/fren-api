@@ -14,7 +14,7 @@ gem "puma", "7.2.0"
 gem "redis", "5.4.0"
 gem "sentry-rails", "6.5.0"
 gem "sentry-ruby", "6.5.0"
-gem "thruster", "0.1.19", require: false
+gem "thruster", "0.1.20", require: false
 gem "wannabe_bool", "0.7.1"
 
 gem "sorbet-schema", "0.9.3"
