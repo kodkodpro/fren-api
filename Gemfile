@@ -11,7 +11,7 @@ gem "nilify_blanks", "1.4"
 gem "operandi", github: "akodkod/operandi"
 gem "pg", "1.6.3"
 gem "puma", "7.2.0"
-gem "redis", "5.4.0"
+gem "redis", "5.4.1"
 gem "sentry-rails", "6.5.0"
 gem "sentry-ruby", "6.5.0"
 gem "thruster", "0.1.19", require: false
