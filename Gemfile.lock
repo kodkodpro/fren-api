@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akodkod/operandi.git
-  revision: ee9b4fdf67a10897deb26e00cd701fe980dc67f3
+  revision: 67b8c958ec7ae6df5014801b41ebe1a548b756ef
   specs:
     operandi (4.0.0)
 
