@@ -21,7 +21,7 @@ bin/rails db:reset       # Drop + create + migrate + seed
 
 ## Architecture
 
-Rails 8.1 API-only app (Ruby 4.0.1, PostgreSQL) that serves as a reverse proxy for the OpenAI API, built for the Momo iOS app. Future scope: authorization, caching, rate limiting, subscription verification, dynamic app config.
+Rails 8.1 API-only app (Ruby 4.0.1, PostgreSQL) that serves as a reverse proxy for the OpenAI API, built for the Fren iOS app. Future scope: authorization, caching, rate limiting, subscription verification, dynamic app config.
 
 ### Key routes
 
@@ -67,7 +67,7 @@ Use `# typed: strict` for initializers and config files.
 
 - **Double quotes** for all strings
 - **Trailing commas** in multiline arrays/hashes (`consistent_comma`); `diff_comma` for method args
-- **Compact class style** — `class Momo::Application < Rails::Application` not nested modules
+- **Compact class style** — `class Fren::Application < Rails::Application` not nested modules
 - **Lambda literal** — `->` not `lambda`
 - **Hash shorthand** — `{ key: }` when variable matches symbol name
 - **No line length limit**, no method/class/block length limits

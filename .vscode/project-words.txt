@@ -8,7 +8,7 @@ Kamal
 libjemalloc
 libvips
 memery
-Momo
+Fren
 nilify
 pidfile
 pids

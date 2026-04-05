@@ -1,6 +1,6 @@
-# Momo API
+# Fren API
 
-This app servers as an API server for the Momo iOS app.
+This app servers as an API server for the Fren iOS app.
 
 Main goals of this app are:
 - Act as a reverse proxy for OpenAI API, so that we can add additional features like authorization, caching, rate limiting, etc.
