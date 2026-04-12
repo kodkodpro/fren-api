@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # OpenAI
   match "proxy/openai/*path", to: "proxy#openai", via: :all, as: :proxy_openai
 
+  # Analytics
+  resources :analytics, only: [:create]
+
   # Feedback
   resources :feedbacks, only: [:create]
 

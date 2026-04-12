@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_23_122716) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_08_154849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "analytics_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "name", limit: 2, null: false
+    t.datetime "occurred_at", null: false
+    t.jsonb "properties", default: {}
+    t.uuid "user_id", null: false
+    t.index ["name"], name: "index_analytics_events_on_name"
+    t.index ["occurred_at"], name: "index_analytics_events_on_occurred_at"
+    t.index ["user_id"], name: "index_analytics_events_on_user_id"
+  end
 
   create_table "feedbacks", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -27,5 +38,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_23_122716) do
     t.datetime "created_at", null: false
   end
 
+  add_foreign_key "analytics_events", "users"
   add_foreign_key "feedbacks", "users"
 end

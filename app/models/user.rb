@@ -3,5 +3,6 @@
 
 class User < ApplicationRecord
   # Associations
+  has_many :analytics_events, dependent: :destroy
   has_many :feedbacks, dependent: :destroy
 end
