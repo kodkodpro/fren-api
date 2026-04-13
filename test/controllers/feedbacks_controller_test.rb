@@ -60,12 +60,13 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     assert_includes response_json["errors"], "Message is too short (minimum is 10 characters)"
   end
 
-  test "raises error without X-User-Id header" do
+  test "returns unauthorized without X-User-Id header" do
     params = attributes_for(:feedback)
 
-    assert_raises(RuntimeError) do
-      post feedbacks_url,
-           params: { feedback: params }
-    end
+    post feedbacks_url,
+         params: { feedback: params }
+
+    assert_response :unauthorized
+    assert_equal "X-User-Id header is required", response_json["error"]
   end
 end

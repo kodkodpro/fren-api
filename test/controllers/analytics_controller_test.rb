@@ -126,10 +126,11 @@ class AnalyticsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "requires authentication" do
-    assert_raises(RuntimeError) do
-      post analytics_url,
-           params: { events: [] },
-           as: :json
-    end
+    post analytics_url,
+         params: { events: [] },
+         as: :json
+
+    assert_response :unauthorized
+    assert_equal "X-User-Id header is required", response_json["error"]
   end
 end

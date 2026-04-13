@@ -8,6 +8,9 @@ class ApplicationController < ActionController::API
   # Callbacks
   before_action :authenticate_user!
 
+  # Error handling
+  rescue_from Fren::AuthError, with: :handle_auth_error
+
   private
 
   # Getters / Setters
@@ -17,11 +20,16 @@ class ApplicationController < ActionController::API
   sig { void }
   def authenticate_user!
     user_id = request.headers["X-User-Id"]&.strip
-    raise "X-User-Id header is required" if user_id.blank?
+    raise Fren::AuthError, "X-User-Id header is required" if user_id.blank?
 
     uuid_regex = /\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/i
-    raise "X-User-Id header must be a valid UUID" unless user_id.match?(uuid_regex)
+    raise Fren::AuthError, "X-User-Id header must be a valid UUID" unless user_id.match?(uuid_regex)
 
     self.current_user = User.find_or_create_by!(id: user_id)
+  end
+
+  sig { params(error: Fren::AuthError).void }
+  def handle_auth_error(error)
+    render json: { status: :error, error: error.message }, status: :unauthorized
   end
 end

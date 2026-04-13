@@ -3,14 +3,15 @@ annotaterb
 autocorrection
 bootsnap
 dotenv
+Fren
 jemalloc
 Kamal
 libjemalloc
 libvips
 memery
-Fren
 nilify
 pidfile
 pids
+rescuable
 rubocop
 shoulda
