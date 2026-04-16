@@ -1,0 +1,165 @@
+#!/usr/bin/env ruby
+# typed: true
+# frozen_string_literal: true
+
+require "dotenv"
+Dotenv.load(".env.local")
+
+require "net/http"
+require "json"
+require "uri"
+
+REQUEST_COUNT = 10
+MODEL = "gpt-4o-mini"
+MAX_TOKENS = 10
+TEST_USER_ID = "00000000-0000-0000-0000-000000000000"
+
+api_key = ENV["OPENAI_API_KEY"]
+proxy_base = ARGV[0]
+
+if api_key.nil? || api_key.empty? || proxy_base.nil? || proxy_base.empty?
+  abort <<~USAGE
+    Usage: OPENAI_API_KEY=... bin/benchmark-open-ai-proxy <proxy-host>
+    Example: OPENAI_API_KEY=sk-... bin/benchmark-open-ai-proxy development-api.fren.day/proxy/openai
+  USAGE
+end
+
+direct_uri = URI.parse("https://api.openai.com/v1/chat/completions")
+proxy_uri = URI.parse("https://#{proxy_base}/v1/chat/completions")
+
+PAYLOAD = JSON.generate(
+  "model" => MODEL,
+  "messages" => [
+    { "role" => "user", "content" => "Say hello" },
+  ],
+  "max_tokens" => MAX_TOKENS,
+)
+
+def run_request(uri, api_key)
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
+  http.open_timeout = 10
+  http.read_timeout = 30
+
+  request = Net::HTTP::Post.new(uri.request_uri)
+  request["Authorization"] = "Bearer #{api_key}"
+  request["Content-Type"] = "application/json"
+  request["Accept"] = "application/json"
+  request["X-User-ID"] = TEST_USER_ID
+  request.body = PAYLOAD
+
+  start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  response = http.request(request)
+  duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
+
+  if response.code.to_i >= 200 && response.code.to_i < 300
+    { success: true, duration:, status: response.code.to_i, error: nil }
+  else
+    { success: false, duration:, status: response.code.to_i, error: "#{response.code} #{response.message}" }
+  end
+rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED => e
+  duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
+  { success: false, duration:, status: nil, error: e.message }
+rescue StandardError => e
+  duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
+  { success: false, duration:, status: nil, error: e.message }
+end
+
+def run_benchmark(label, uri, api_key, count: REQUEST_COUNT)
+  puts "\nRunning #{label} requests (#{uri.host})..."
+  results = []
+
+  count.times do |i|
+    result = run_request(uri, api_key)
+    result[:index] = i + 1
+    results << result
+    print result[:success] ? ". " : "F "
+    $stdout.flush
+  end
+
+  puts
+  results
+end
+
+def compute_stats(results)
+  total = results.length
+  successes = results.select { |r| r[:success] }
+  failures = results.reject { |r| r[:success] }
+  durations = successes.map { |r| r[:duration] }.sort
+
+  stats = { total:, successes: successes.length, failures: failures.length }
+
+  if durations.any?
+    stats[:fastest] = durations.first
+    stats[:slowest] = durations.last
+    stats[:average] = durations.sum / durations.length
+    stats[:median] = if durations.length.odd?
+      durations[durations.length / 2]
+    else
+      mid = durations.length / 2
+      (durations[mid - 1] + durations[mid]) / 2.0
+    end
+  end
+
+  stats
+end
+
+def format_ms(seconds)
+  return "N/A" if seconds.nil?
+
+  "#{(seconds * 1000).round(1)}ms"
+end
+
+def format_diff(direct_val, proxy_val)
+  return "N/A" if direct_val.nil? || proxy_val.nil?
+
+  diff_ms = ((proxy_val - direct_val) * 1000).round(1)
+  diff_pct = ((proxy_val - direct_val) / direct_val * 100).round(1)
+  prefix = diff_ms >= 0 ? "+" : ""
+  "#{prefix}#{diff_ms}ms (#{prefix}#{diff_pct}%)"
+end
+
+masked_key = "#{api_key[0..2]}...#{api_key[-4..]}"
+
+puts "OpenAI Proxy Benchmark"
+puts "======================"
+puts
+puts "Configuration:"
+puts "  Model:      #{MODEL}"
+puts "  Max tokens: #{MAX_TOKENS}"
+puts "  Requests:   #{REQUEST_COUNT} per target"
+puts "  API Key:    #{masked_key}"
+
+proxy_results = run_benchmark("proxy", proxy_uri, api_key)
+direct_results = run_benchmark("direct", direct_uri, api_key)
+
+proxy_stats = compute_stats(proxy_results)
+direct_stats = compute_stats(direct_results)
+
+puts
+puts "Results"
+puts "-------"
+puts
+printf "  %-14s %-16s %-16s %s\n", "", "Direct", "Proxy", "Diff"
+%w[fastest slowest average median].each do |metric|
+  d = direct_stats[metric.to_sym]
+  p = proxy_stats[metric.to_sym]
+  printf "  %-14s %-16s %-16s %s\n",
+    "#{metric.capitalize}:",
+    format_ms(d),
+    format_ms(p),
+    format_diff(d, p)
+end
+printf "  %-14s %-16s %s\n", "Successes:", "#{direct_stats[:successes]}/#{direct_stats[:total]}", "#{proxy_stats[:successes]}/#{proxy_stats[:total]}"
+printf "  %-14s %-16s %s\n", "Failures:", "#{direct_stats[:failures]}/#{direct_stats[:total]}", "#{proxy_stats[:failures]}/#{proxy_stats[:total]}"
+
+all_failures = direct_results.reject { |r| r[:success] }.map { |r| { target: "Direct", **r } } +
+  proxy_results.reject { |r| r[:success] }.map { |r| { target: "Proxy", **r } }
+
+if all_failures.any?
+  puts
+  puts "Failed requests:"
+  all_failures.each do |f|
+    puts "  #{f[:target]} ##{f[:index]}: #{f[:error]}"
+  end
+end
