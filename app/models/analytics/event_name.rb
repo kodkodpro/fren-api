@@ -28,6 +28,8 @@ class Analytics::EventName < T::Enum
     ButtonTapped = new(22)
     MicPermissionResult = new(23)
     NotificationsPermissionResult = new(24)
+    OnboardingLanguageSelected = new(26)
+    UserLanguageChanged = new(27)
   end
 
   def properties_schema
@@ -39,6 +41,7 @@ class Analytics::EventName < T::Enum
     when NotificationsGenerated then Analytics::Properties::NotificationsGenerated
     when ButtonTapped then Analytics::Properties::ButtonTapped
     when MicPermissionResult, NotificationsPermissionResult then Analytics::Properties::PermissionResult
+    when OnboardingLanguageSelected, UserLanguageChanged then Analytics::Properties::LanguageSelected
     else Analytics::Properties::Empty
     end
   end

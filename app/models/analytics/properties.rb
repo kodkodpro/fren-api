@@ -34,4 +34,8 @@ module Analytics::Properties
   class PermissionResult < T::Struct
     const :granted, T::Boolean
   end
+
+  class LanguageSelected < T::Struct
+    const :language, String
+  end
 end
