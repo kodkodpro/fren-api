@@ -9,7 +9,7 @@ module Analytics::Properties
   end
 
   class RecordingStopped < T::Struct
-    const :duration_ms, Integer
+    const :duration, Integer
   end
 
   class ScreenViewed < T::Struct
@@ -19,8 +19,16 @@ module Analytics::Properties
   class AIRequestCompleted < T::Struct
     const :name, String
     const :model, String
-    const :input_tokens, Integer
-    const :output_tokens, Integer
+    const :reasoning_effort, T.nilable(String)
+    const :input_tokens, T.nilable(Integer)
+    const :output_tokens, T.nilable(Integer)
+    const :duration, T.nilable(Integer)
+  end
+
+  class AITranscribeCompleted < T::Struct
+    const :model, String
+    const :recording_duration, Integer
+    const :request_duration, Integer
   end
 
   class NotificationsGenerated < T::Struct

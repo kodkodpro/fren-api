@@ -41,10 +41,4 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def root_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def trigger_sentry_error_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def trigger_sentry_message_url(*args); end
 end

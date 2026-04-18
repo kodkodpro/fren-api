@@ -23,6 +23,7 @@ class Analytics::EventName < T::Enum
     TagDeleted = new(17)
     ScreenViewed = new(18)
     AIRequestCompleted = new(19)
+    AITranscribeCompleted = new(28)
     NotificationsGenerated = new(20)
     NotificationOpened = new(21)
     ButtonTapped = new(22)
