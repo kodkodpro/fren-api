@@ -121,4 +121,75 @@ class RemoteConfigTest < ActiveSupport::TestCase
     assert_nil result[:block_app]
     assert_nil result[:block_recording]
   end
+
+  test "set stores a TranscriptionProvider enum value" do
+    RemoteConfig.set(:transcription_provider, RemoteConfig::TranscriptionProvider::ElevenLabs)
+
+    assert_equal RemoteConfig::TranscriptionProvider::ElevenLabs, RemoteConfig.load.transcription_provider
+  end
+
+  test "set accepts a serialized string value" do
+    RemoteConfig.set(:transcription_provider, "openai")
+
+    assert_equal RemoteConfig::TranscriptionProvider::OpenAI, RemoteConfig.load.transcription_provider
+  end
+
+  test "set overwrites an existing value" do
+    RemoteConfig.set(:transcription_provider, RemoteConfig::TranscriptionProvider::OpenAI)
+    RemoteConfig.set(:transcription_provider, RemoteConfig::TranscriptionProvider::ElevenLabs)
+
+    assert_equal RemoteConfig::TranscriptionProvider::ElevenLabs, RemoteConfig.load.transcription_provider
+  end
+
+  test "set preserves existing blocks" do
+    RemoteConfig.block(:block_app, title: "App", text: "App blocked")
+    RemoteConfig.set(:transcription_provider, RemoteConfig::TranscriptionProvider::OpenAI)
+
+    config = RemoteConfig.load
+
+    assert_equal "App", T.must(config.block_app).title
+    assert_equal RemoteConfig::TranscriptionProvider::OpenAI, config.transcription_provider
+  end
+
+  test "set raises ArgumentError for unknown setting" do
+    assert_raises(ArgumentError) { RemoteConfig.set(:unknown_setting, "value") }
+  end
+
+  test "unset clears a setting" do
+    RemoteConfig.set(:transcription_provider, RemoteConfig::TranscriptionProvider::OpenAI)
+    RemoteConfig.unset(:transcription_provider)
+
+    assert_nil RemoteConfig.load.transcription_provider
+  end
+
+  test "unset is a no-op when setting is not set" do
+    RemoteConfig.unset(:transcription_provider)
+
+    assert_nil RemoteConfig.load.transcription_provider
+  end
+
+  test "unset preserves existing blocks" do
+    RemoteConfig.block(:block_app, title: "App", text: "App blocked")
+    RemoteConfig.set(:transcription_provider, RemoteConfig::TranscriptionProvider::OpenAI)
+    RemoteConfig.unset(:transcription_provider)
+
+    config = RemoteConfig.load
+
+    assert_equal "App", T.must(config.block_app).title
+    assert_nil config.transcription_provider
+  end
+
+  test "unset raises ArgumentError for unknown setting" do
+    assert_raises(ArgumentError) { RemoteConfig.unset(:unknown_setting) }
+  end
+
+  test "load returns nil transcription_provider by default" do
+    assert_nil RemoteConfig.load.transcription_provider
+  end
+
+  test "to_h returns the serialized string for transcription_provider" do
+    RemoteConfig.set(:transcription_provider, RemoteConfig::TranscriptionProvider::ElevenLabs)
+
+    assert_equal "elevenlabs", RemoteConfig.to_h[:transcription_provider]
+  end
 end

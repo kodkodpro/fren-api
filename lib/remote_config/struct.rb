@@ -16,4 +16,5 @@ class RemoteConfig::Struct < T::Struct
 
   const :block_app, T.nilable(BlockConfig), default: nil
   const :block_recording, T.nilable(BlockConfig), default: nil
+  const :transcription_provider, T.nilable(RemoteConfig::TranscriptionProvider), default: nil
 end
