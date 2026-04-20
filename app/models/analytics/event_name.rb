@@ -43,6 +43,7 @@ class Analytics::EventName < T::Enum
     when ButtonTapped then Analytics::Properties::ButtonTapped
     when MicPermissionResult, NotificationsPermissionResult then Analytics::Properties::PermissionResult
     when OnboardingLanguageSelected, UserLanguageChanged then Analytics::Properties::LanguageSelected
+    when AITranscribeCompleted then Analytics::Properties::AITranscribeCompleted
     else Analytics::Properties::Empty
     end
   end
