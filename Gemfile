@@ -19,7 +19,7 @@ gem "thruster", "0.1.20", require: false
 gem "wannabe_bool", "0.7.1"
 
 gem "sorbet-schema", "0.9.3"
-gem "sorbet-static-and-runtime", "0.6.13143"
+gem "sorbet-static-and-runtime", "0.6.13153"
 gem "tapioca", "0.18.0", require: false, group: [:development, :test]
 
 group :development, :test do
