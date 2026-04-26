@@ -25,5 +25,7 @@ begin
     EnvConfig,
   )
 rescue StandardError => e
-  raise "Environment variables validation failed: #{e.message}"
+  if ENV["SECRET_KEY_BASE_DUMMY"] != "1"
+    raise "Environment variables validation failed: #{e.message}"
+  end
 end
