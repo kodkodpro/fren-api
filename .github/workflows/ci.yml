@@ -8,7 +8,9 @@ on:
 
 jobs:
   scan_ruby:
+    name: Security Scan
     runs-on: ubuntu-latest
+    timeout-minutes: 3
 
     steps:
       - name: Checkout code
@@ -40,10 +42,29 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
-        run: bin/rubocop
+        run: bundle exec rubocop -f github
+
+  typecheck:
+    name: Sorbet
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Check types with Sorbet
+        run: bundle exec srb tc
 
   test:
+    name: Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 3
 
     services:
       postgres:
@@ -72,4 +93,4 @@ jobs:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: bin/rails db:test:prepare test
+        run: bundle exec rails db:test:prepare test
