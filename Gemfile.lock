@@ -116,7 +116,7 @@ GEM
     benchmark (0.5.0)
     bigdecimal (4.1.2)
     bindex (0.8.1)
-    bootsnap (1.23.0)
+    bootsnap (1.24.0)
       msgpack (~> 1.2)
     brakeman (8.0.4)
       racc
@@ -200,7 +200,7 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
-    net-imap (0.6.3)
+    net-imap (0.6.4)
       date
       net-protocol
     net-pop (0.1.2)
@@ -226,7 +226,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.2-x86_64-linux-musl)
       racc (~> 1.4)
-    parallel (2.0.1)
+    parallel (2.1.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
@@ -494,7 +494,7 @@ PLATFORMS
 DEPENDENCIES
   annotaterb (= 4.22.0)
   boba!
-  bootsnap (= 1.23.0)
+  bootsnap (= 1.24.0)
   brakeman (= 8.0.4)
   bundle_update_interactive (= 0.13.1)
   bundler-audit (= 0.9.3)
@@ -503,8 +503,8 @@ DEPENDENCIES
   dotenv (= 3.2.0)
   factory_bot (= 6.5.6)
   faker (= 3.8.0)
-  groupdate (= 6.8)
-  hightop (= 1.0)
+  groupdate (= 6.8.0)
+  hightop (= 1.0.0)
   importmap-rails (= 2.2.3)
   jbuilder (= 2.14.1)
   memery (= 1.8.0)
@@ -529,20 +529,20 @@ DEPENDENCIES
   rubocop-sorbet (= 0.12.0)
   rubocop-thread_safety (= 0.7.3)
   ruby-lsp (= 0.26.9)
-  ruby_ui (= 1.1)
+  ruby_ui (= 1.1.0)
   sentry-rails (= 6.5.0)
   sentry-ruby (= 6.5.0)
   sorbet-schema (= 0.9.3)
   sorbet-static-and-runtime (= 0.6.13143)
   spy (= 1.0.5)
   stimulus-rails (= 1.3.4)
-  tailwind_merge (= 1.4)
-  tailwindcss-rails (= 4.4)
+  tailwind_merge (= 1.4.0)
+  tailwindcss-rails (= 4.4.0)
   tapioca (= 0.18.0)
   thruster (= 0.1.20)
   turbo-rails (= 2.0.23)
   wannabe_bool (= 0.7.1)
-  web-console (= 4.3)
+  web-console (= 4.3.0)
   webmock (= 3.26.2)
 
 CHECKSUMS
@@ -566,7 +566,7 @@ CHECKSUMS
   bigdecimal (4.1.2) sha256=53d217666027eab4280346fba98e7d5b66baaae1b9c3c1c0ffe89d48188a3fbd
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   boba (0.1.6)
-  bootsnap (1.23.0) sha256=c1254f458d58558b58be0f8eb8f6eec2821456785b7cdd1e16248e2020d3f214
+  bootsnap (1.24.0) sha256=34e6dea61ff4895101aa9c10894ce30186bec73fe2279e0eb52040d8d4cec297
   brakeman (8.0.4) sha256=7bf921fa9638544835df9aa7b3e720a9a72c0267f34f92135955edd80d4dcf6f
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundle_update_interactive (0.13.1) sha256=726d199e99ee2410ddc8387e20778b87619abc33f0fd31d25683873bfbf389ca
@@ -606,7 +606,7 @@ CHECKSUMS
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.5) sha256=f007d7246bf4feea549502842cd7c6aba8851cdc9c90ba06de9c476c0d01155c
   msgpack (1.8.0) sha256=e64ce0212000d016809f5048b48eb3a65ffb169db22238fb4b72472fecb2d732
-  net-imap (0.6.3) sha256=9bab75f876596d09ee7bf911a291da478e0cd6badc54dfb82874855ccc82f2ad
+  net-imap (0.6.4) sha256=9a5598c67a3022c284d98430ef1d4948e7dbdb62596f61081ea8ca933270a02b
   net-pop (0.1.2) sha256=848b4e982013c15b2f0382792268763b748cce91c9e91e36b0f27ed26420dff3
   net-protocol (0.2.2) sha256=aa73e0cba6a125369de9837b8d8ef82a61849360eba0521900e2c3713aa162a8
   net-smtp (0.5.1) sha256=ed96a0af63c524fceb4b29b0d352195c30d82dd916a42f03c62a3a70e5b70736
@@ -620,7 +620,7 @@ CHECKSUMS
   nokogiri (1.19.2-x86_64-linux-gnu) sha256=fa8feca882b73e871a9845f3817a72e9734c8e974bdc4fbad6e4bc6e8076b94f
   nokogiri (1.19.2-x86_64-linux-musl) sha256=93128448e61a9383a30baef041bf1f5817e22f297a1d400521e90294445069a8
   operandi (4.0.0)
-  parallel (2.0.1) sha256=337782d3e39f4121e67563bf91dd8ece67f48923d90698614773a0ec9a5b2c7d
+  parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
   pastel (0.8.0) sha256=481da9fb7d2f6e6b1a08faf11fa10363172dc40fd47848f096ae21209f805a75
   pg (1.6.3-aarch64-linux) sha256=0698ad563e02383c27510b76bf7d4cd2de19cd1d16a5013f375dd473e4be72ea
