@@ -26,7 +26,10 @@ jobs:
         run: bin/bundler-audit
 
   lint:
+    name: RuboCop
     runs-on: ubuntu-latest
+    timeout-minutes: 3
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -37,7 +40,7 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: bin/rubocop
 
   test:
     runs-on: ubuntu-latest
