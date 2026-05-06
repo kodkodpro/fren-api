@@ -58,7 +58,7 @@ end
 group :development, :test do
   gem "debug", "1.11.1"
   gem "dotenv", "3.2.0"
-  gem "factory_bot", "6.5.6"
+  gem "factory_bot", "6.6.0"
   gem "faker", "3.8.0"
   gem "minitest", "6.0.5"
   gem "spy", "1.0.5", require: false
