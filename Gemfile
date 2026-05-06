@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gem "rails", "8.1.3"
 
-gem "bootsnap", "1.24.0", require: false
+gem "bootsnap", "1.24.3", require: false
 gem "chartkick", "5.2.1"
 gem "groupdate", "6.8.0"
 gem "hightop", "1.0.0"
