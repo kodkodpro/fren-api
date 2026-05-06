@@ -42,7 +42,7 @@ group :development do
   gem "bundler-audit", "0.9.3"
   gem "bundle_update_interactive", "0.13.1"
   gem "rubocop", "1.86.1", require: false
-  gem "rubocop-capybara", "2.22.1", require: false
+  gem "rubocop-capybara", "2.23.0", require: false
   gem "rubocop-factory_bot", "2.28.0", require: false
   gem "rubocop-minitest", "0.39.1", require: false
   gem "rubocop-performance", "1.26.1", require: false
