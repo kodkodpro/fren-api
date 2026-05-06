@@ -33,7 +33,7 @@ gem "operandi", github: "akodkod/operandi"
 gem "phlex-sorbet", github: "akodkod/phlex-sorbet"
 
 gem "sorbet-schema", "0.9.3"
-gem "sorbet-static-and-runtime", "0.6.13143"
+gem "sorbet-static-and-runtime", "0.6.13189"
 gem "tapioca", "0.18.0", require: false, group: [:development, :test]
 
 group :development do
