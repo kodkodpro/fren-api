@@ -51,7 +51,7 @@ group :development do
   gem "rubocop-sorbet", "0.12.0", require: false
   gem "rubocop-thread_safety", "0.7.3", require: false
   gem "ruby-lsp", "0.26.9"
-  gem "ruby_ui", "1.1.0", require: false
+  gem "ruby_ui", "1.2.0", require: false
   gem "web-console", "4.3.0"
 end
 

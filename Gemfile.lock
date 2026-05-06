@@ -371,7 +371,7 @@ GEM
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
     ruby-progressbar (1.13.0)
-    ruby_ui (1.1.0)
+    ruby_ui (1.2.0)
     securerandom (0.4.1)
     sentry-rails (6.5.0)
       railties (>= 5.2.0)
@@ -529,7 +529,7 @@ DEPENDENCIES
   rubocop-sorbet (= 0.12.0)
   rubocop-thread_safety (= 0.7.3)
   ruby-lsp (= 0.26.9)
-  ruby_ui (= 1.1.0)
+  ruby_ui (= 1.2.0)
   sentry-rails (= 6.5.0)
   sentry-ruby (= 6.5.0)
   sorbet-schema (= 0.9.3)
@@ -673,7 +673,7 @@ CHECKSUMS
   rubocop-thread_safety (0.7.3) sha256=067cdd52fbf5deffc18995437e45b5194236eaff4f71de3375a1f6052e48f431
   ruby-lsp (0.26.9) sha256=33a01c001c00a76b4e821efc04ed7572983430f31ca5d6f3e343d0b6ccab4129
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
-  ruby_ui (1.1.0) sha256=03dc432da466d3b9dc30d3efa7bb47f7a6363cf5368dfe57518cec32c553f7b8
+  ruby_ui (1.2.0) sha256=04f90908fd3677ad1b0373abb309175c9625b67146617daae7d8469625692fcf
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   sentry-rails (6.5.0) sha256=ebf9d4d82c740c3e0e4a0840f11f7bbd0cf648a30afd9c67e5b50bb07018a0e4
   sentry-ruby (6.5.0) sha256=3c57ae0d6a017aafcd9ac37114e38149a58534679dec5d4e9e8fc010b85f3a6b
