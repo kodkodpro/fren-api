@@ -60,7 +60,7 @@ group :development, :test do
   gem "dotenv", "3.2.0"
   gem "factory_bot", "6.5.6"
   gem "faker", "3.8.0"
-  gem "minitest", "6.0.5"
+  gem "minitest", "6.0.6"
   gem "spy", "1.0.5", require: false
   gem "webmock", "3.26.2", require: false
 end
