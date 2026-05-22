@@ -4,6 +4,7 @@ autocorrection
 autoloaders
 bootsnap
 chartkick
+citext
 dotenv
 elevenlabs
 ELEVENLABS
