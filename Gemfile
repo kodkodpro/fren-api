@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gem "rails", "8.1.3"
 
-gem "bootsnap", "1.24.4", require: false
+gem "bootsnap", "1.24.5", require: false
 gem "jwt", "3.2.0"
 gem "memery", "1.8.0"
 gem "nilify_blanks", "1.4.0"
