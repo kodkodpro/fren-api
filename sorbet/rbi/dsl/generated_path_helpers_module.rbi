@@ -16,6 +16,9 @@ module GeneratedPathHelpersModule
   def feedbacks_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def paywall_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def proxy_elevenlabs_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

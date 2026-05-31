@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   # Remote Config
   get "remote-config", to: "remote_config#show", as: :remote_config
 
+  # Paywall
+  get "paywall", to: "paywalls#show", as: :paywall
+
   # Health
   get "up", to: "health#index", as: :rails_health_check
 

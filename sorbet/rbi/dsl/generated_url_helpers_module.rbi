@@ -16,6 +16,9 @@ module GeneratedUrlHelpersModule
   def feedbacks_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def paywall_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def proxy_elevenlabs_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

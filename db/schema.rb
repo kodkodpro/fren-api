@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_22_104849) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_30_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -83,6 +83,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_104849) do
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
+  create_table "paywalls", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.jsonb "data", default: {}, null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.integer "weight", default: 0, null: false
+    t.index ["active"], name: "index_paywalls_on_active"
+    t.check_constraint "weight >= 0", name: "paywalls_weight_non_negative"
+  end
+
   create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.jsonb "data", default: {}, null: false
@@ -98,6 +109,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_104849) do
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.uuid "paywall_id", null: false
+    t.index ["paywall_id"], name: "index_users_on_paywall_id"
   end
 
   add_foreign_key "admin_accounts", "admins", column: "user_id", on_delete: :cascade
@@ -105,4 +118,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_104849) do
   add_foreign_key "analytics_events", "users"
   add_foreign_key "feedbacks", "users"
   add_foreign_key "subscriptions", "users", on_delete: :cascade
+  add_foreign_key "users", "paywalls"
 end

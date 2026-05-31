@@ -3,7 +3,7 @@
 
 class ProxyController < ApplicationController
   # Callbacks
-  # before_action :require_active_subscription
+  before_action :require_active_subscription
 
   def openai
     proxy(

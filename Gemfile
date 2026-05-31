@@ -20,6 +20,7 @@ gem "wannabe_bool", "0.7.1"
 # Custom-made
 gem "boba", github: "akodkod/boba" # With support for the latest Tapioca
 gem "operandi", github: "akodkod/operandi"
+gem "sorbet-model-attributes", github: "akodkod/sorbet-model-attributes"
 gem "sorbet-model-enum", github: "akodkod/sorbet-model-enum"
 
 gem "sorbet-schema", "0.9.3"

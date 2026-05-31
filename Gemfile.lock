@@ -21,6 +21,15 @@ GIT
       rubocop (>= 1.48.0, < 2.0)
 
 GIT
+  remote: https://github.com/akodkod/sorbet-model-attributes.git
+  revision: bc2c4fd5a259a8d1e6e57acfbc4bed872c47babb
+  specs:
+    sorbet-model-attributes (0.1.0)
+      rails (>= 7.0)
+      sorbet-runtime (>= 0.6)
+      sorbet-schema (>= 0.9)
+
+GIT
   remote: https://github.com/akodkod/sorbet-model-enum.git
   revision: a97b0396a8ed29d11849154fd5c601975177bbee
   specs:
@@ -481,6 +490,7 @@ DEPENDENCIES
   ruby-lsp (= 0.26.9)
   sentry-rails (= 6.5.0)
   sentry-ruby (= 6.5.0)
+  sorbet-model-attributes!
   sorbet-model-enum!
   sorbet-schema (= 0.9.3)
   sorbet-static-and-runtime (= 0.6.13244)
@@ -618,6 +628,7 @@ CHECKSUMS
   sentry-rails (6.5.0) sha256=ebf9d4d82c740c3e0e4a0840f11f7bbd0cf648a30afd9c67e5b50bb07018a0e4
   sentry-ruby (6.5.0) sha256=3c57ae0d6a017aafcd9ac37114e38149a58534679dec5d4e9e8fc010b85f3a6b
   sorbet (0.6.13244) sha256=c9d5c571fe9dc5cc2b7219623ad65a1033bb1d0175a477998d87207cb892fe6a
+  sorbet-model-attributes (0.1.0)
   sorbet-model-enum (0.1.0)
   sorbet-result (1.4.0) sha256=194eededbcb78cf04ee2db8bd3b19e76f305dc043062ed90c56b4b9eac268ccd
   sorbet-runtime (0.6.13244) sha256=80f0bf0bf6cff2c874dbd2182329c2b6fd5d6ced60397efca4be1970289e037c

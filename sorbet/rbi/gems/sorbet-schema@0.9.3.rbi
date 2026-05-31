@@ -33,19 +33,6 @@ class SerializeValue
   end
 end
 
-class T::InexactStruct
-  include ::T::Props
-  include ::T::Props::Plugin
-  include ::T::Props::Optional
-  include ::T::Props::PrettyPrintable
-  include ::T::Props::Serializable
-  include ::T::Props::WeakConstructor
-  include ::T::Props::Constructor
-  extend ::T::Props::ClassMethods
-  extend ::T::Props::Plugin::ClassMethods
-  extend ::T::Props::Serializable::ClassMethods
-end
-
 # pkg:gem/sorbet-schema#lib/sorbet-schema/t/struct.rb:4
 class T::Struct < ::T::InexactStruct
   # pkg:gem/sorbet-schema#lib/sorbet-schema/t/struct.rb:26
@@ -55,7 +42,7 @@ class T::Struct < ::T::InexactStruct
       options: T::Hash[Symbol, T.untyped]
     ).returns(Typed::Result[T.untyped, Typed::SerializeError])
   end
-  def serialize_to(serializer_type, options: T.unsafe(nil)); end
+  def serialize_to(serializer_type, options: {}); end
 
   class << self
     # pkg:gem/sorbet-schema#lib/sorbet-schema/t/struct.rb:21
@@ -66,7 +53,7 @@ class T::Struct < ::T::InexactStruct
         options: T::Hash[Symbol, T.untyped]
       ).returns(Typed::Result[T.attached_class, Typed::DeserializeError])
     end
-    def deserialize_from(serializer_type, source, options: T.unsafe(nil)); end
+    def deserialize_from(serializer_type, source, options: {}); end
 
     # pkg:gem/sorbet-schema#lib/sorbet-schema/t/struct.rb:6
     sig { overridable.returns(Typed::Schema) }
@@ -74,10 +61,12 @@ class T::Struct < ::T::InexactStruct
 
     # pkg:gem/sorbet-schema#lib/sorbet-schema/t/struct.rb:10
     sig { params(type: Symbol, options: T::Hash[Symbol, T.untyped]).returns(Typed::Serializer[T.untyped, T.untyped]) }
-    def serializer(type, options: T.unsafe(nil)); end
+    def serializer(type, options: {}); end
   end
 end
 
+# Sorbet-aware namespace to super-charge your projects
+#
 # pkg:gem/sorbet-schema#lib/sorbet-schema.rb:32
 module Typed; end
 
@@ -122,8 +111,6 @@ class Typed::Coercion::BooleanCoercer < ::Typed::Coercion::Coercer
   end
 end
 
-# @abstract It cannot be directly instantiated. Subclasses must implement the `abstract` methods below.
-#
 # pkg:gem/sorbet-schema#lib/typed/coercion/coercer.rb:5
 class Typed::Coercion::Coercer
   extend T::Generic
@@ -132,8 +119,6 @@ class Typed::Coercion::Coercer
 
   Target = type_member(:out)
 
-  # @abstract
-  #
   # pkg:gem/sorbet-schema#lib/typed/coercion/coercer.rb:18
   sig do
     abstract
@@ -145,8 +130,6 @@ class Typed::Coercion::Coercer
   def coerce(type:, value:); end
 
   class << self
-    # @abstract
-    #
     # pkg:gem/sorbet-schema#lib/typed/coercion/coercer.rb:14
     sig { abstract.params(type: ::T::Types::Base).returns(T::Boolean) }
     def used_for_type?(type); end
@@ -618,8 +601,6 @@ end
 # pkg:gem/sorbet-schema#lib/typed/serialize_error.rb:4
 class Typed::SerializeError < ::Typed::SerializationError; end
 
-# @abstract It cannot be directly instantiated. Subclasses must implement the `abstract` methods below.
-#
 # pkg:gem/sorbet-schema#lib/typed/serializer.rb:4
 class Typed::Serializer
   extend T::Generic
@@ -637,8 +618,6 @@ class Typed::Serializer
   sig { returns(T::Hash[::T::Types::Base, T.untyped]) }
   def coercer_cache; end
 
-  # @abstract
-  #
   # pkg:gem/sorbet-schema#lib/typed/serializer.rb:28
   sig { abstract.params(source: Input).returns(Typed::Result[::T::Struct, ::Typed::DeserializeError]) }
   def deserialize(source); end
@@ -647,8 +626,6 @@ class Typed::Serializer
   sig { returns(::Typed::Schema) }
   def schema; end
 
-  # @abstract
-  #
   # pkg:gem/sorbet-schema#lib/typed/serializer.rb:32
   sig { abstract.params(struct: ::T::Struct).returns(Typed::Result[Output, ::Typed::SerializeError]) }
   def serialize(struct); end
@@ -696,14 +673,10 @@ class Typed::Validations::FieldTypeValidator
   def validate(field:, value:); end
 end
 
-# @abstract Subclasses must implement the `abstract` methods below.
-#
 # pkg:gem/sorbet-schema#lib/typed/validations/field_validator.rb:5
 module Typed::Validations::FieldValidator
   interface!
 
-  # @abstract
-  #
   # pkg:gem/sorbet-schema#lib/typed/validations/field_validator.rb:11
   sig do
     abstract
