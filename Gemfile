@@ -24,7 +24,7 @@ gem "sorbet-model-attributes", github: "akodkod/sorbet-model-attributes"
 gem "sorbet-model-enum", github: "akodkod/sorbet-model-enum"
 
 gem "sorbet-schema", "0.9.3"
-gem "sorbet-static-and-runtime", "0.6.13244"
+gem "sorbet-static-and-runtime", "0.6.13266"
 gem "tapioca", "0.19.1", require: false, group: [:development, :test]
 
 group :development do
