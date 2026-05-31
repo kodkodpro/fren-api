@@ -21,7 +21,6 @@ class PaywallsControllerTest < ActionDispatch::IntegrationTest
     paywall = create(
       :paywall,
       data: {
-        default_locale: "en",
         locales: {
           "en" => { title: "Upgrade", bullets: [] },
           "pt-BR" => { title: "Assinar", bullets: [] },
@@ -41,7 +40,6 @@ class PaywallsControllerTest < ActionDispatch::IntegrationTest
     paywall = create(
       :paywall,
       data: {
-        default_locale: "en",
         locales: {
           "en" => { title: "Upgrade", bullets: [] },
           "pt" => { title: "Assinar", bullets: [] },

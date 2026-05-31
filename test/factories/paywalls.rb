@@ -9,7 +9,6 @@ FactoryBot.define do
 
     data do
       {
-        default_locale: "en",
         locales: {
           "en" => {
             title: "Upgrade",

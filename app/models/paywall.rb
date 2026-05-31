@@ -16,7 +16,6 @@ class Paywall < ApplicationRecord
   validates :active, inclusion: { in: [true, false] }
   validates :weight, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validate :data_includes_english_locale
-  validate :data_includes_default_locale
 
   sig { params(random: T.nilable(Random)).returns(Paywall) }
   def self.pick_for_user!(random: nil)
@@ -48,12 +47,5 @@ class Paywall < ApplicationRecord
     return if data.locale_available?("en")
 
     errors.add(:data, "must include an en locale")
-  end
-
-  sig { void }
-  def data_includes_default_locale
-    return if data.locale_available?(data.default_locale)
-
-    errors.add(:data, "must include the default locale")
   end
 end

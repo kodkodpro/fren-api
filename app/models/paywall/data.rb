@@ -20,7 +20,6 @@ class Paywall::Data < T::Struct
     const :bullets, T::Array[Bullet], default: []
   end
 
-  const :default_locale, String, default: "en"
   const :locales, T::Hash[String, Content], default: {}
   const :products, T::Array[Product], default: []
 
@@ -59,7 +58,7 @@ class Paywall::Data < T::Struct
   sig { params(device_language: T.nilable(String)).returns(T::Array[String]) }
   def content_locale_candidates(device_language)
     locale = self.class.normalize_locale(device_language)
-    candidates = [locale, base_locale(locale), self.class.normalize_locale(default_locale), "en"]
+    candidates = [locale, base_locale(locale), "en"]
 
     candidates.compact.uniq
   end

@@ -11,7 +11,6 @@ class CreatePaywalls < ActiveRecord::Migration[8.1]
 
   FALLBACK_PAYWALL_NAME = "June 1st, 2026"
   FALLBACK_PAYWALL_DATA = {
-    default_locale: "en",
     locales: {
       "en" => {
         title: "Upgrade to Fren Pro",

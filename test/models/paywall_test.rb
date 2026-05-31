@@ -15,7 +15,6 @@ class PaywallTest < ActiveSupport::TestCase
     paywall = build(
       :paywall,
       data: {
-        default_locale: "pt",
         locales: {
           "pt" => {
             title: "Atualizar",
@@ -42,7 +41,6 @@ class PaywallTest < ActiveSupport::TestCase
     paywall = create(
       :paywall,
       data: {
-        default_locale: "en",
         locales: {
           "en" => { title: "Upgrade", bullets: [] },
           "pt-BR" => { title: "Assinar", bullets: [] },
@@ -58,7 +56,6 @@ class PaywallTest < ActiveSupport::TestCase
     paywall = create(
       :paywall,
       data: {
-        default_locale: "en",
         locales: {
           "en" => { title: "Upgrade", bullets: [] },
           "pt" => { title: "Assinar", bullets: [] },
