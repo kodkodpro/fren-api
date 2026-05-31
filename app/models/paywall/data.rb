@@ -14,7 +14,9 @@ class Paywall::Data < T::Struct
   end
 
   class Content < T::Struct
-    const :title, String
+    const :image, T.nilable(String)
+    const :title, T.nilable(String)
+    const :description, T.nilable(String)
     const :bullets, T::Array[Bullet], default: []
   end
 

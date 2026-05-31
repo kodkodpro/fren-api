@@ -8,8 +8,9 @@ class PaywallsController < ApplicationController
 
     render json: {
       id: paywall.id,
-      name: paywall.name,
+      image: content.image,
       title: content.title,
+      description: content.description,
       bullets: content.bullets.map(&:to_h),
       products: paywall.data.products.map(&:to_h),
     }

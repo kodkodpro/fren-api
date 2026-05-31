@@ -12,7 +12,6 @@ class PaywallsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_equal paywall.id, response_json["id"]
-    assert_equal paywall.name, response_json["name"]
     assert_equal "Upgrade", response_json["title"]
     assert_equal "Unlimited access", response_json.dig("bullets", 0, "title")
     assert_equal "fren.pro.monthly", response_json.dig("products", 0, "apple_product_id")
