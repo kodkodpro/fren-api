@@ -33,8 +33,8 @@ class Fren::Application < Rails::Application
   # Enable API only mode
   config.api_only = true
 
-  # Ignore autoloading for tasks and core_ext directories
-  config.autoload_lib(ignore: ["tasks", "core_ext"])
+  # Ignore autoloading for manually required library support
+  config.autoload_lib(ignore: ["tasks", "core_ext", "sorbet"])
 
   # Set default log level to info
   config.log_level = :info
