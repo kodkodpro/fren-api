@@ -12,8 +12,8 @@ gem "pg", "1.6.3"
 gem "puma", "8.0.1"
 gem "rack-attack", "6.8.0"
 gem "redis", "5.4.1"
-gem "sentry-rails", "6.5.0"
-gem "sentry-ruby", "6.5.0"
+gem "sentry-rails", "6.6.2"
+gem "sentry-ruby", "6.6.2"
 gem "thruster", "0.1.21", require: false
 gem "wannabe_bool", "0.7.1"
 
