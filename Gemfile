@@ -29,7 +29,7 @@ gem "tapioca", "0.19.1", require: false, group: [:development, :test]
 
 group :development do
   gem "annotaterb", "4.22.0"
-  gem "brakeman", "8.0.4", require: false
+  gem "brakeman", "8.0.5", require: false
   gem "bundler-audit", "0.9.3"
   gem "bundle_update_interactive", "0.13.1"
   gem "rubocop", "1.86.2", require: false
