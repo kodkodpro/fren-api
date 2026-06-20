@@ -7,9 +7,6 @@ module RemoteConfig
   SETTINGS = T.let([:transcription_provider].freeze, T::Array[Symbol])
 
   class << self
-    # Delegates
-    delegate :to_h, to: :load
-
     sig { params(name: Symbol, config: T.any(Struct::BlockConfig, T::Hash[Symbol, T.untyped])).void }
     def block(name, config)
       validate_block!(name)
@@ -57,6 +54,11 @@ module RemoteConfig
       return RemoteConfig::Struct.new unless json
 
       RemoteConfig::Struct.deserialize_from!(:json, json)
+    end
+
+    sig { returns(T::Hash[Symbol, T.untyped]) }
+    def to_h
+      load.to_h.merge(disable_free_memos_quota: Env.disable_free_memos_quota)
     end
 
     sig { void }

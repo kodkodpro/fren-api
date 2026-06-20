@@ -17,7 +17,7 @@ class FreeMemoQuotaController < ApplicationController
   def quota_json(user)
     {
       available: user.free_memos_available,
-      can_record: user.free_memos_available.positive?,
+      can_record: !Env.disable_free_memos_quota && user.free_memos_available.positive?,
     }
   end
 end

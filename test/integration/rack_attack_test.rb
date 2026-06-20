@@ -22,11 +22,11 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     headers = proxy_headers
 
     20.times do |i|
-      get(proxy_openai_url(path: "v1/models"), headers:)
+      post_openai_transcription(headers:)
       assert_response :success, "request ##{i + 1} should succeed"
     end
 
-    get(proxy_openai_url(path: "v1/models"), headers:)
+    post_openai_transcription(headers:)
 
     assert_response :too_many_requests
     assert_equal "rate_limited", response_json["error"]
@@ -41,14 +41,14 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     headers_b = proxy_headers(user_b)
 
     20.times do
-      get proxy_openai_url(path: "v1/models"), headers: headers_a
+      post_openai_transcription(headers: headers_a)
       assert_response :success
     end
 
-    get proxy_openai_url(path: "v1/models"), headers: headers_a
+    post_openai_transcription(headers: headers_a)
     assert_response :too_many_requests
 
-    get proxy_openai_url(path: "v1/models"), headers: headers_b
+    post_openai_transcription(headers: headers_b)
     assert_response :success
   end
 
@@ -57,13 +57,13 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     # counts by IP. We only assert that the throttle key path works: the 21st
     # request gets 429 instead of the usual raise.
     20.times do
-      get proxy_openai_url(path: "v1/models")
+      post_openai_transcription(headers: {})
     rescue RuntimeError
       # ApplicationController raises before the controller renders. That's
       # expected pre-throttle; we only care the request was counted.
     end
 
-    get proxy_openai_url(path: "v1/models")
+    post_openai_transcription(headers: {})
     assert_response :too_many_requests
   end
 
@@ -95,10 +95,30 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     headers = proxy_headers
     capture_message_spy = Spy.on(Sentry, :capture_message)
 
-    21.times { get(proxy_openai_url(path: "v1/models"), headers:) }
+    21.times { post_openai_transcription(headers:) }
 
     assert_response :too_many_requests
     assert_spy_called capture_message_spy, "Sentry.capture_message was not called"
+  end
+
+  private
+
+  def post_openai_transcription(headers:)
+    boundary = "----TestBoundary1234"
+
+    post proxy_openai_url(path: "v1/audio/transcriptions"),
+         params: multipart_body(boundary:),
+         headers: headers.merge("Content-Type" => "multipart/form-data; boundary=#{boundary}")
+  end
+
+  def multipart_body(boundary:)
+    [
+      "--#{boundary}",
+      'Content-Disposition: form-data; name="model"',
+      "",
+      "whisper-1",
+      "--#{boundary}--",
+    ].join("\r\n")
   end
 end
 # rubocop:enable Minitest/EmptyLineBeforeAssertionMethods

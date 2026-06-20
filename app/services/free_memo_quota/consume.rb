@@ -12,6 +12,7 @@ class FreeMemoQuota::Consume < ApplicationService
   private
 
   def validate_quota
+    raise Fren::FreeMemoQuotaExhaustedError, "Free memo quota exhausted" if Env.disable_free_memos_quota
     return if user.free_memos_available.positive?
 
     raise Fren::FreeMemoQuotaExhaustedError, "Free memo quota exhausted"

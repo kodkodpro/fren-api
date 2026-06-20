@@ -6,6 +6,7 @@ require "dotenv/load"
 
 class EnvConfig < T::Struct
   const :enable_billing, T::Boolean, default: false
+  const :disable_free_memos_quota, T::Boolean, default: false
 
   const :redis_url, T.nilable(String)
 

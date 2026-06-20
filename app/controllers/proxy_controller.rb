@@ -4,6 +4,7 @@
 class ProxyController < ApplicationController
   # Callbacks
   before_action :require_ai_access
+  before_action :verify_openai_proxy_request, only: :openai
 
   def openai
     proxy(
@@ -22,6 +23,20 @@ class ProxyController < ApplicationController
   end
 
   private
+
+  def verify_openai_proxy_request
+    result = OpenAI::PromptGuard.run(
+      path: request.path_parameters[:path],
+      raw_body: request.raw_post.to_s,
+      content_type: request.headers["Content-Type"],
+    )
+
+    return if result.allowed
+
+    notify_blocked_openai_proxy_request(result.reason)
+
+    render json: { error: "forbidden" }, status: :forbidden
+  end
 
   def proxy(base_url:, auth_header:, service:)
     uri = build_target_uri(base_url)
@@ -62,6 +77,22 @@ class ProxyController < ApplicationController
     )
 
     Rails.logger.error("[#{service} Proxy] Error #{upstream.code}: #{upstream.body}")
+  end
+
+  def notify_blocked_openai_proxy_request(reason)
+    Sentry.capture_message(
+      "OpenAI Proxy Request Blocked",
+      level: :warning,
+      extra: {
+        path: request.path,
+        method: request.method,
+        content_type: request.headers["Content-Type"],
+        user_id: current_user.id,
+        reason:,
+      },
+    )
+
+    Rails.logger.warn("[OpenAI Proxy] Blocked #{request.method} #{request.path}: #{reason}")
   end
 
   def net_http_request_class

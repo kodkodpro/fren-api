@@ -320,6 +320,9 @@ class Paywall
     sig { params(column_names: T.untyped).returns(T.untyped) }
     def pick(*column_names); end
 
+    sig { params(random: T.nilable(::Random)).returns(::Paywall) }
+    def pick_for_user!(random: T.unsafe(nil)); end
+
     sig { params(column_names: T.untyped).returns(T.untyped) }
     def pluck(*column_names); end
 
