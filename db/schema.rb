@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_30_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_13_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -109,8 +109,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_30_120000) do
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "free_memos_available", default: 3, null: false
     t.uuid "paywall_id", null: false
     t.index ["paywall_id"], name: "index_users_on_paywall_id"
+    t.check_constraint "free_memos_available >= 0", name: "users_free_memos_available_non_negative"
   end
 
   add_foreign_key "admin_accounts", "admins", column: "user_id", on_delete: :cascade

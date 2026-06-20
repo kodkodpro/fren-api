@@ -131,6 +131,7 @@ class AnalyticsControllerTest < ActionDispatch::IntegrationTest
          as: :json
 
     assert_response :unauthorized
-    assert_equal "X-User-Id header is required", response_json["error"]
+    assert_equal "X-User-Id header is required", response_json.dig("error", "message")
+    assert_equal "authentication_failed", response_json.dig("error", "code")
   end
 end

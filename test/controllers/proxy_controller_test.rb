@@ -151,7 +151,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_spy_not_called spy
   end
 
-  # Subscription gate
+  # AI access gate
 
   test "allows requests without a transaction id when billing is disabled" do
     stub_request(:get, "#{@openai_base}/v1/models")
@@ -163,60 +163,84 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal '{"data":[]}', response.body
   end
 
-  test "returns 402 when X-iOS-Transaction-Id header is missing" do
+  test "allows requests with free memo quota when billing is enabled" do
+    user = create(:user, free_memos_available: 1)
     Spy.on(Env, :enable_billing).and_return(true)
 
-    get proxy_openai_url(path: "v1/models"), headers: auth_headers
+    stub_request(:get, "#{@openai_base}/v1/models")
+      .to_return(status: 200, body: '{"data":[]}', headers: { "Content-Type" => "application/json" })
 
-    assert_response :payment_required
-    assert_match(/X-iOS-Transaction-Id header is required/, response_json["error"])
+    assert_no_difference -> { user.reload.free_memos_available } do
+      get proxy_openai_url(path: "v1/models"), headers: auth_headers(user)
+    end
+
+    assert_response :success
+    assert_equal '{"data":[]}', response.body
   end
 
-  test "returns 402 when the subscription is expired" do
-    create(:subscription, :expired, user: test_user, transaction_id: "tx-expired")
+  test "returns 402 when no active subscription or free memo quota is available" do
+    user = create(:user, free_memos_available: 0)
+    Spy.on(Env, :enable_billing).and_return(true)
+
+    get proxy_openai_url(path: "v1/models"), headers: auth_headers(user)
+
+    assert_response :payment_required
+    assert_equal "Active subscription or free memo quota is required", response_json.dig("error", "message")
+    assert_equal "subscription_required", response_json.dig("error", "code")
+  end
+
+  test "returns 402 when the subscription is expired and quota is exhausted" do
+    user = create(:user, free_memos_available: 0)
+    create(:subscription, :expired, user:, transaction_id: "tx-expired")
     Spy.on(Env, :enable_billing).and_return(true)
 
     get proxy_openai_url(path: "v1/models"),
-        headers: auth_headers.merge("X-iOS-Transaction-Id" => "tx-expired")
+        headers: auth_headers(user).merge("X-iOS-Transaction-Id" => "tx-expired")
 
     assert_response :payment_required
-    assert_match(/Subscription is not active/, response_json["error"])
+    assert_equal "Active subscription or free memo quota is required", response_json.dig("error", "message")
+    assert_equal "subscription_required", response_json.dig("error", "code")
   end
 
-  test "returns 402 when the subscription is revoked" do
-    create(:subscription, :revoked, user: test_user, transaction_id: "tx-revoked")
+  test "returns 402 when the subscription is revoked and quota is exhausted" do
+    user = create(:user, free_memos_available: 0)
+    create(:subscription, :revoked, user:, transaction_id: "tx-revoked")
     Spy.on(Env, :enable_billing).and_return(true)
 
     get proxy_openai_url(path: "v1/models"),
-        headers: auth_headers.merge("X-iOS-Transaction-Id" => "tx-revoked")
+        headers: auth_headers(user).merge("X-iOS-Transaction-Id" => "tx-revoked")
 
     assert_response :payment_required
+    assert_equal "subscription_required", response_json.dig("error", "code")
   end
 
-  test "allows requests when the subscription is in the grace period" do
-    create(:subscription, :in_grace_period, user: test_user, transaction_id: "tx-grace")
+  test "allows requests when the subscription is in the grace period and quota is exhausted" do
+    user = create(:user, free_memos_available: 0)
+    create(:subscription, :in_grace_period, user:, transaction_id: "tx-grace")
     Spy.on(Env, :enable_billing).and_return(true)
 
     stub_request(:get, "#{@openai_base}/v1/models")
       .to_return(status: 200, body: '{"data":[]}', headers: { "Content-Type" => "application/json" })
 
     get proxy_openai_url(path: "v1/models"),
-        headers: auth_headers.merge("X-iOS-Transaction-Id" => "tx-grace")
+        headers: auth_headers(user).merge("X-iOS-Transaction-Id" => "tx-grace")
 
     assert_response :success
   end
 
-  test "returns 402 when Apple returns an error during refresh" do
-    create(:subscription, :active, :stale, user: test_user, transaction_id: "tx-apple-down")
+  test "returns 402 when Apple returns an error during refresh and quota is exhausted" do
+    user = create(:user, free_memos_available: 0)
+    create(:subscription, :active, :stale, user:, transaction_id: "tx-apple-down")
     Spy.on(Env, :enable_billing).and_return(true)
 
     stub_request(:get, /api.storekit-sandbox.itunes.apple.com/)
       .to_return(status: 500, body: "{}")
 
     get proxy_openai_url(path: "v1/models"),
-        headers: auth_headers.merge("X-iOS-Transaction-Id" => "tx-apple-down")
+        headers: auth_headers(user).merge("X-iOS-Transaction-Id" => "tx-apple-down")
 
     assert_response :payment_required
-    assert_match(/Unable to verify subscription/, response_json["error"])
+    assert_equal "Unable to verify subscription", response_json.dig("error", "message")
+    assert_equal "subscription_verification_failed", response_json.dig("error", "code")
   end
 end

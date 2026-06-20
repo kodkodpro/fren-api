@@ -18,7 +18,7 @@ class ActionDispatch::IntegrationTest
 
   # Headers for requests through ProxyController. Provisions an active,
   # fresh subscription for the user/transaction_id pair so the
-  # `require_active_subscription` callback passes without hitting Apple.
+  # AI access callback passes without hitting Apple.
   def proxy_headers(user = nil, transaction_id: "tx-#{SecureRandom.hex(6)}")
     user ||= test_user
     create(:subscription, :active, user:, transaction_id:)

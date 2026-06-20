@@ -13,7 +13,13 @@ module GeneratedPathHelpersModule
   def analytics_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def consume_free_memo_quota_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def feedbacks_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def free_memo_quota_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def paywall_path(*args); end
