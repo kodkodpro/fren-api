@@ -1,10 +1,10 @@
 # typed: true
 # frozen_string_literal: true
 
-class FeedbacksController < ApplicationController
+class FeedbacksController < PublicController
   def create
     feedback = Feedback.new(feedback_params)
-    feedback.user = current_user
+    feedback.user = optional_current_user
 
     if feedback.save
       render json: { status: :ok },
@@ -17,7 +17,14 @@ class FeedbacksController < ApplicationController
 
   private
 
+  def optional_current_user
+    user_id = request.headers["X-User-Id"]&.strip
+    return nil if user_id.blank?
+
+    current_user
+  end
+
   def feedback_params
-    params.expect(feedback: [:email, :message])
+    params.expect(feedback: [:email, :message, :source])
   end
 end

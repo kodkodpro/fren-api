@@ -1,19 +1,55 @@
 # typed: true
 # frozen_string_literal: true
 
-# Be sure to restart your server when you modify this file.
+class FeedbackCors
+  ALLOWED_ORIGINS = [
+    "https://fren.day",
+    "https://www.fren.day",
+    "http://localhost:4321",
+    "http://127.0.0.1:4321",
+  ].freeze
 
-# Avoid CORS issues when API is called from the frontend app.
-# Handle Cross-Origin Resource Sharing (CORS) in order to accept cross-origin Ajax requests.
+  def initialize(app)
+    @app = app
+  end
 
-# Read more: https://github.com/cyu/rack-cors
+  def call(env)
+    request = Rack::Request.new(env)
+    origin = request.get_header("HTTP_ORIGIN")
 
-# Rails.application.config.middleware.insert_before 0, Rack::Cors do
-#   allow do
-#     origins "example.com"
-#
-#     resource "*",
-#       headers: :any,
-#       methods: [:get, :post, :put, :patch, :delete, :options, :head]
-#   end
-# end
+    if request.options? && request.path == "/feedbacks" && allowed_origin?(origin)
+      return [
+        204,
+        cors_headers(origin).merge("Content-Length" => "0"),
+        [],
+      ]
+    end
+
+    status, headers, response = @app.call(env)
+    headers = headers.merge(cors_headers(origin)) if request.path == "/feedbacks" && allowed_origin?(origin)
+
+    [
+      status,
+      headers,
+      response,
+    ]
+  end
+
+  private
+
+  def allowed_origin?(origin)
+    ALLOWED_ORIGINS.include?(origin)
+  end
+
+  def cors_headers(origin)
+    {
+      "Access-Control-Allow-Origin" => origin,
+      "Access-Control-Allow-Methods" => "POST, OPTIONS",
+      "Access-Control-Allow-Headers" => "Content-Type",
+      "Access-Control-Max-Age" => "7200",
+      "Vary" => "Origin",
+    }
+  end
+end
+
+Rails.application.config.middleware.insert_before 0, FeedbackCors

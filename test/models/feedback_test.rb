@@ -4,16 +4,30 @@
 require "test_helper"
 
 class FeedbackTest < ActiveSupport::TestCase
-  test "valid with user and message" do
+  test "valid with user message and ios app source" do
     feedback = build(:feedback)
 
     assert_predicate feedback, :valid?
   end
 
-  test "invalid without user" do
+  test "ios app source is invalid without user" do
     feedback = build(:feedback, user: nil)
 
     assert_not feedback.valid?
+    assert_includes feedback.errors[:user], "must exist"
+  end
+
+  test "web contact source is valid without user" do
+    feedback = build(:feedback, user: nil, source: Feedback::WEB_CONTACT_SOURCE)
+
+    assert_predicate feedback, :valid?
+  end
+
+  test "invalid with unknown source" do
+    feedback = build(:feedback, source: "unknown")
+
+    assert_not feedback.valid?
+    assert_includes feedback.errors[:source], "is not included in the list"
   end
 
   test "invalid without message" do
