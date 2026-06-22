@@ -33,4 +33,17 @@ class AnalyticsEventTest < ActiveSupport::TestCase
 
     assert_not event.valid?
   end
+
+  test "invalid without tier" do
+    event = build(:analytics_event, tier: nil)
+
+    assert_not event.valid?
+  end
+
+  test "stores tier as the T enum integer" do
+    event = create(:analytics_event, tier: Analytics::Tier::Trial)
+
+    assert_equal Analytics::Tier::Trial, event.tier
+    assert_equal Analytics::Tier::Trial.serialize, event.read_attribute_before_type_cast(:tier)
+  end
 end

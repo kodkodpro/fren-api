@@ -8,10 +8,17 @@
 class AnalyticsEvent
   include GeneratedAssociationMethods
   include GeneratedAttributeMethods
+  include EnumMethodsModule
   extend CommonRelationMethods
   extend GeneratedRelationMethods
 
   RelationType = T.type_alias { T.any(PrivateRelation, PrivateAssociationRelation, PrivateCollectionProxy) }
+
+  sig { returns(::Analytics::Tier) }
+  def tier; end
+
+  sig { params(value: T.nilable(T.any(::Analytics::Tier, String, Symbol, Integer))).void }
+  def tier=(value); end
 
   private
 
@@ -26,6 +33,9 @@ class AnalyticsEvent
       ).returns(::AnalyticsEvent)
     end
     def new(attributes = nil, &block); end
+
+    sig { returns(T::Hash[T.any(String, Symbol), Integer]) }
+    def tiers; end
   end
 
   module CommonRelationMethods
@@ -417,6 +427,32 @@ class AnalyticsEvent
     def third_to_last!; end
   end
 
+  module EnumMethodsModule
+    sig { void }
+    def free!; end
+
+    sig { returns(T::Boolean) }
+    def free?; end
+
+    sig { void }
+    def subscribed!; end
+
+    sig { returns(T::Boolean) }
+    def subscribed?; end
+
+    sig { void }
+    def trial!; end
+
+    sig { returns(T::Boolean) }
+    def trial?; end
+
+    sig { void }
+    def unknown!; end
+
+    sig { returns(T::Boolean) }
+    def unknown?; end
+  end
+
   module GeneratedAssociationMethods
     sig { params(args: T.untyped, blk: T.untyped).returns(::User) }
     def build_user(*args, &blk); end
@@ -481,6 +517,9 @@ class AnalyticsEvent
     def extract_associated(association); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def free(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def from(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelationGroupChain) }
@@ -518,6 +557,18 @@ class AnalyticsEvent
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def none(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def not_free(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def not_subscribed(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def not_trial(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def not_unknown(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def null_relation?(*args, &blk); end
@@ -576,7 +627,16 @@ class AnalyticsEvent
     def structurally_compatible?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def subscribed(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def trial(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def uniq!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
+    def unknown(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateAssociationRelation) }
     def unscope(*args, &blk); end
@@ -889,6 +949,9 @@ class AnalyticsEvent
     def restore_properties!; end
 
     sig { void }
+    def restore_tier!; end
+
+    sig { void }
     def restore_user_id!; end
 
     sig { returns(T.nilable([::ActiveSupport::TimeWithZone, ::ActiveSupport::TimeWithZone])) }
@@ -928,10 +991,61 @@ class AnalyticsEvent
     def saved_change_to_properties?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { returns(T.nilable([::String, ::String])) }
+    def saved_change_to_tier; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def saved_change_to_tier?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable([::String, ::String])) }
     def saved_change_to_user_id; end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def saved_change_to_user_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(::String) }
+    def tier; end
+
+    sig { params(value: T.any(::String, ::Symbol, ::Integer)).returns(T.any(::String, ::Symbol, ::Integer)) }
+    def tier=(value); end
+
+    sig { returns(T::Boolean) }
+    def tier?; end
+
+    sig { returns(T.nilable(::String)) }
+    def tier_before_last_save; end
+
+    sig { returns(T.untyped) }
+    def tier_before_type_cast; end
+
+    sig { returns(T::Boolean) }
+    def tier_came_from_user?; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def tier_change; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def tier_change_to_be_saved; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def tier_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def tier_in_database; end
+
+    sig { returns(T.nilable([::String, ::String])) }
+    def tier_previous_change; end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def tier_previously_changed?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { returns(T.nilable(::String)) }
+    def tier_previously_was; end
+
+    sig { returns(T.nilable(::String)) }
+    def tier_was; end
+
+    sig { void }
+    def tier_will_change!; end
 
     sig { returns(::String) }
     def user_id; end
@@ -997,6 +1111,9 @@ class AnalyticsEvent
     def will_save_change_to_properties?(from: T.unsafe(nil), to: T.unsafe(nil)); end
 
     sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
+    def will_save_change_to_tier?(from: T.unsafe(nil), to: T.unsafe(nil)); end
+
+    sig { params(from: T.untyped, to: T.untyped).returns(T::Boolean) }
     def will_save_change_to_user_id?(from: T.unsafe(nil), to: T.unsafe(nil)); end
   end
 
@@ -1033,6 +1150,9 @@ class AnalyticsEvent
 
     sig { params(association: Symbol).returns(T::Array[T.untyped]) }
     def extract_associated(association); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def free(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def from(*args, &blk); end
@@ -1072,6 +1192,18 @@ class AnalyticsEvent
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def none(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def not_free(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def not_subscribed(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def not_trial(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def not_unknown(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def null_relation?(*args, &blk); end
@@ -1130,7 +1262,16 @@ class AnalyticsEvent
     def structurally_compatible?(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def subscribed(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def trial(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def uniq!(*args, &blk); end
+
+    sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
+    def unknown(*args, &blk); end
 
     sig { params(args: T.untyped, blk: T.untyped).returns(PrivateRelation) }
     def unscope(*args, &blk); end

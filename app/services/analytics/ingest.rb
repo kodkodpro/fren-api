@@ -22,27 +22,39 @@ class Analytics::Ingest < ApplicationService
         Analytics::EventName.deserialize(name)
       rescue KeyError
         event_errors << { index:, name:, error: "unknown event name" }
-        next
+        nil
       end
 
-      begin
-        enum_value.properties_schema.new(**properties.symbolize_keys)
-      rescue ArgumentError, TypeError => e
-        event_errors << { index:, name:, error: "invalid properties: #{e.message}" }
-        next
+      if enum_value
+        begin
+          enum_value.properties_schema.new(**properties.symbolize_keys)
+        rescue ArgumentError, TypeError => e
+          event_errors << { index:, name:, error: "invalid properties: #{e.message}" }
+        end
+      end
+
+      tier = begin
+        Analytics::Tier.deserialize_payload(event_hash["tier"])
+      rescue KeyError
+        event_errors << { index:, name:, error: "invalid tier" }
+        Analytics::Tier::Unknown
       end
 
       occurred_at = begin
-        Time.zone.parse(event_hash["occurred_at"].to_s)
+        parsed_at = Time.zone.parse(event_hash["occurred_at"].to_s)
+        raise ArgumentError if parsed_at.nil?
+
+        parsed_at
       rescue ArgumentError, TypeError
         event_errors << { index:, name:, error: "invalid or missing occurred_at" }
-        next
+        created_at
       end
 
       rows << {
         user_id: user.id,
         name:,
         properties:,
+        tier: tier.serialize,
         occurred_at:,
         created_at:,
       }
@@ -52,10 +64,10 @@ class Analytics::Ingest < ApplicationService
 
     return if event_errors.empty?
 
-    Rails.logger.warn("Analytics events failed to save: #{event_errors.inspect} (user_id: #{user.id})")
+    Rails.logger.warn("Invalid analytics events received: #{event_errors.inspect} (user_id: #{user.id})")
 
     Sentry.capture_message(
-      "Analytics events failed to save",
+      "Invalid analytics events received",
       level: :warning,
       extra: { errors: event_errors, user_id: user.id },
     )

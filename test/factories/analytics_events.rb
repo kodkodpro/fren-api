@@ -6,6 +6,7 @@ FactoryBot.define do
     user
     name { 1 }
     properties { {} }
+    tier { Analytics::Tier::Unknown.serialize }
     occurred_at { Time.current }
   end
 end

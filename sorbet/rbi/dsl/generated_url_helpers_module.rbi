@@ -13,6 +13,9 @@ module GeneratedUrlHelpersModule
   def analytics_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def battle_log_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def consume_free_memo_quota_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

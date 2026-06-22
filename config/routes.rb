@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   # Analytics
   resources :analytics, only: [:create]
 
+  # Create alias for analytics to avoid blocking by ad blockers
+  post "battle-log", to: "analytics#create", as: :battle_log
+
   # Feedback
   resources :feedbacks, only: [:create]
 

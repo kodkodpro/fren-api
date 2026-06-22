@@ -46,4 +46,13 @@ module Analytics::Properties
   class LanguageSelected < T::Struct
     const :language, String
   end
+
+  class AppReviewPrompt < T::Struct
+    const :trigger, String
+  end
+
+  class AppReviewPromptSkipped < T::Struct
+    const :trigger, String
+    const :reason, String
+  end
 end

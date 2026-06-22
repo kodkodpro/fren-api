@@ -31,6 +31,12 @@ class Analytics::EventName < T::Enum
     NotificationsPermissionResult = new(24)
     OnboardingLanguageSelected = new(26)
     UserLanguageChanged = new(27)
+    AppOpenedFromQuickRecordWidget = new(29)
+    AppReviewPromptShown = new(30)
+    AppReviewPromptDismissed = new(31)
+    AppReviewRatingSelected = new(32)
+    AppReviewFeedbackSelected = new(33)
+    AppReviewPromptSkipped = new(34)
   end
 
   def properties_schema
@@ -44,6 +50,9 @@ class Analytics::EventName < T::Enum
     when MicPermissionResult, NotificationsPermissionResult then Analytics::Properties::PermissionResult
     when OnboardingLanguageSelected, UserLanguageChanged then Analytics::Properties::LanguageSelected
     when AITranscribeCompleted then Analytics::Properties::AITranscribeCompleted
+    when AppReviewPromptShown, AppReviewPromptDismissed, AppReviewRatingSelected, AppReviewFeedbackSelected
+      Analytics::Properties::AppReviewPrompt
+    when AppReviewPromptSkipped then Analytics::Properties::AppReviewPromptSkipped
     else Analytics::Properties::Empty
     end
   end
