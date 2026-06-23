@@ -1,6 +1,22 @@
 # typed: true
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: paywalls
+#
+#  id         :uuid             not null, primary key
+#  active     :boolean          default(TRUE), not null
+#  data       :jsonb            not null
+#  name       :string           not null
+#  weight     :integer          default(0), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_paywalls_on_active  (active)
+#
 class Paywall < ApplicationRecord
   # Associations
   has_many :users, dependent: :restrict_with_exception
