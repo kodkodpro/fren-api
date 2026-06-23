@@ -58,7 +58,7 @@ module RemoteConfig
 
     sig { returns(T::Hash[Symbol, T.untyped]) }
     def to_h
-      load.to_h.merge(disable_free_memos_quota: Env.disable_free_memos_quota)
+      load.to_h.merge(disable_free_ai_analysis: Env.disable_free_ai_analysis)
     end
 
     sig { void }

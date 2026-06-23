@@ -16,13 +16,13 @@ module GeneratedUrlHelpersModule
   def battle_log_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def consume_free_memo_quota_url(*args); end
+  def consume_free_ai_analysis_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def feedbacks_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
-  def free_memo_quota_url(*args); end
+  def free_ai_analysis_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def paywall_url(*args); end

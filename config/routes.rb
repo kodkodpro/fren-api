@@ -21,9 +21,9 @@ Rails.application.routes.draw do
   # Paywall
   get "paywall", to: "paywalls#show", as: :paywall
 
-  # Free memo quota
-  get "free-memo-quota", to: "free_memo_quota#show", as: :free_memo_quota
-  post "free-memo-quota/consume", to: "free_memo_quota#consume", as: :consume_free_memo_quota
+  # Free AI analysis
+  get "free-ai-analysis", to: "free_ai_analysis#show", as: :free_ai_analysis
+  post "free-ai-analysis/consume", to: "free_ai_analysis#consume", as: :consume_free_ai_analysis
 
   # Health
   get "up", to: "health#index", as: :rails_health_check

@@ -14,7 +14,7 @@ class RemoteConfigControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_nil response_json["block_app"]
     assert_nil response_json["block_recording"]
-    assert_not response_json["disable_free_memos_quota"]
+    assert_not response_json["disable_free_ai_analysis"]
   end
 
   test "returns config with nested button" do
@@ -52,12 +52,12 @@ class RemoteConfigControllerTest < ActionDispatch::IntegrationTest
     assert_nil response_json["transcription_provider"]
   end
 
-  test "returns disable_free_memos_quota from environment config" do
-    Spy.on(Env, :disable_free_memos_quota).and_return(true)
+  test "returns disable_free_ai_analysis from environment config" do
+    Spy.on(Env, :disable_free_ai_analysis).and_return(true)
 
     get remote_config_url
 
     assert_response :success
-    assert response_json["disable_free_memos_quota"]
+    assert response_json["disable_free_ai_analysis"]
   end
 end

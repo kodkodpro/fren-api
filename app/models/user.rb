@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
 
   # Validations
-  validates :free_memos_available, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :free_ai_analyses_available, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # Callbacks
   before_validation :assign_paywall, on: :create

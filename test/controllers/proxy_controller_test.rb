@@ -209,8 +209,8 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal '{"text":"hello"}', response.body
   end
 
-  test "allows requests with free memo quota when billing is enabled" do
-    user = create(:user, free_memos_available: 1)
+  test "allows requests with free AI analysis when billing is enabled" do
+    user = create(:user, free_ai_analyses_available: 1)
     Spy.on(Env, :enable_billing).and_return(true)
 
     stub_request(:post, "#{@openai_base}/v1/audio/transcriptions")
@@ -218,7 +218,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
 
     boundary = "----TestBoundary1234"
 
-    assert_no_difference -> { user.reload.free_memos_available } do
+    assert_no_difference -> { user.reload.free_ai_analyses_available } do
       post proxy_openai_url(path: "v1/audio/transcriptions"),
            params: multipart_body(boundary:),
            headers: auth_headers(user).merge("Content-Type" => "multipart/form-data; boundary=#{boundary}")
@@ -228,22 +228,22 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal '{"text":"hello"}', response.body
   end
 
-  test "returns 402 for free memo quota when free memo quota is disabled" do
-    user = create(:user, free_memos_available: 1)
+  test "returns 402 for free AI analysis when free AI analysis is disabled" do
+    user = create(:user, free_ai_analyses_available: 1)
     Spy.on(Env, :enable_billing).and_return(true)
-    Spy.on(Env, :disable_free_memos_quota).and_return(true)
+    Spy.on(Env, :disable_free_ai_analysis).and_return(true)
 
     get proxy_openai_url(path: "v1/models"), headers: auth_headers(user)
 
     assert_response :payment_required
-    assert_equal "Active subscription or free memo quota is required", response_json.dig("error", "message")
+    assert_equal "Active subscription or free AI analysis is required", response_json.dig("error", "message")
     assert_equal "subscription_required", response_json.dig("error", "code")
   end
 
-  test "allows active subscription when free memo quota is disabled" do
-    user = create(:user, free_memos_available: 0)
+  test "allows active subscription when free AI analysis is disabled" do
+    user = create(:user, free_ai_analyses_available: 0)
     Spy.on(Env, :enable_billing).and_return(true)
-    Spy.on(Env, :disable_free_memos_quota).and_return(true)
+    Spy.on(Env, :disable_free_ai_analysis).and_return(true)
 
     stub_request(:post, "#{@openai_base}/v1/audio/transcriptions")
       .to_return(status: 200, body: '{"text":"hello"}', headers: { "Content-Type" => "application/json" })
@@ -252,25 +252,25 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
 
     post proxy_openai_url(path: "v1/audio/transcriptions"),
          params: multipart_body(boundary:),
-         headers: proxy_headers(user, transaction_id: "tx-active-disabled-quota").merge("Content-Type" => "multipart/form-data; boundary=#{boundary}")
+         headers: proxy_headers(user, transaction_id: "tx-active-disabled-analysis").merge("Content-Type" => "multipart/form-data; boundary=#{boundary}")
 
     assert_response :success
     assert_equal '{"text":"hello"}', response.body
   end
 
-  test "returns 402 when no active subscription or free memo quota is available" do
-    user = create(:user, free_memos_available: 0)
+  test "returns 402 when no active subscription or free AI analysis is available" do
+    user = create(:user, free_ai_analyses_available: 0)
     Spy.on(Env, :enable_billing).and_return(true)
 
     get proxy_openai_url(path: "v1/models"), headers: auth_headers(user)
 
     assert_response :payment_required
-    assert_equal "Active subscription or free memo quota is required", response_json.dig("error", "message")
+    assert_equal "Active subscription or free AI analysis is required", response_json.dig("error", "message")
     assert_equal "subscription_required", response_json.dig("error", "code")
   end
 
-  test "returns 402 when the subscription is expired and quota is exhausted" do
-    user = create(:user, free_memos_available: 0)
+  test "returns 402 when the subscription is expired and free AI analysis is exhausted" do
+    user = create(:user, free_ai_analyses_available: 0)
     create(:subscription, :expired, user:, transaction_id: "tx-expired")
     Spy.on(Env, :enable_billing).and_return(true)
 
@@ -278,12 +278,12 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
         headers: auth_headers(user).merge("X-iOS-Transaction-Id" => "tx-expired")
 
     assert_response :payment_required
-    assert_equal "Active subscription or free memo quota is required", response_json.dig("error", "message")
+    assert_equal "Active subscription or free AI analysis is required", response_json.dig("error", "message")
     assert_equal "subscription_required", response_json.dig("error", "code")
   end
 
-  test "returns 402 when the subscription is revoked and quota is exhausted" do
-    user = create(:user, free_memos_available: 0)
+  test "returns 402 when the subscription is revoked and free AI analysis is exhausted" do
+    user = create(:user, free_ai_analyses_available: 0)
     create(:subscription, :revoked, user:, transaction_id: "tx-revoked")
     Spy.on(Env, :enable_billing).and_return(true)
 
@@ -294,8 +294,8 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal "subscription_required", response_json.dig("error", "code")
   end
 
-  test "allows requests when the subscription is in the grace period and quota is exhausted" do
-    user = create(:user, free_memos_available: 0)
+  test "allows requests when the subscription is in the grace period and free AI analysis is exhausted" do
+    user = create(:user, free_ai_analyses_available: 0)
     create(:subscription, :in_grace_period, user:, transaction_id: "tx-grace")
     Spy.on(Env, :enable_billing).and_return(true)
 
@@ -314,8 +314,8 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "returns 402 when Apple returns an error during refresh and quota is exhausted" do
-    user = create(:user, free_memos_available: 0)
+  test "returns 402 when Apple returns an error during refresh and free AI analysis is exhausted" do
+    user = create(:user, free_ai_analyses_available: 0)
     create(:subscription, :active, :stale, user:, transaction_id: "tx-apple-down")
     Spy.on(Env, :enable_billing).and_return(true)
 

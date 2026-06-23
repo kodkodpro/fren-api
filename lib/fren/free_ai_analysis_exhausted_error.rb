@@ -1,13 +1,13 @@
 # typed: true
 # frozen_string_literal: true
 
-class Fren::FreeMemoQuotaExhaustedError < Fren::SubscriptionError
+class Fren::FreeAIAnalysisExhaustedError < Fren::SubscriptionError
   class << self
     extend T::Sig
 
     sig { returns(Fren::ErrorCode) }
     def code
-      Fren::ErrorCode::FreeMemoQuotaExhausted
+      Fren::ErrorCode::FreeAIAnalysisExhausted
     end
   end
 end

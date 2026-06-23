@@ -30,16 +30,16 @@ class ApplicationController < ActionController::API
   def require_ai_access
     return unless Env.enable_billing
     return if active_subscription?
-    return if free_memos_available?
+    return if free_ai_analysis_available?
 
-    raise Fren::SubscriptionRequiredError, "Active subscription or free memo quota is required"
+    raise Fren::SubscriptionRequiredError, "Active subscription or free AI analysis is required"
   end
 
   sig { returns(T::Boolean) }
-  def free_memos_available?
-    return false if Env.disable_free_memos_quota
+  def free_ai_analysis_available?
+    return false if Env.disable_free_ai_analysis
 
-    current_user.free_memos_available.positive?
+    current_user.free_ai_analyses_available.positive?
   end
 
   sig { returns(T::Boolean) }

@@ -120,7 +120,7 @@ class RemoteConfigTest < ActiveSupport::TestCase
 
     assert_nil result[:block_app]
     assert_nil result[:block_recording]
-    assert_not result[:disable_free_memos_quota]
+    assert_not result[:disable_free_ai_analysis]
   end
 
   test "set stores a TranscriptionProvider enum value" do
@@ -194,9 +194,9 @@ class RemoteConfigTest < ActiveSupport::TestCase
     assert_equal "elevenlabs", RemoteConfig.to_h[:transcription_provider]
   end
 
-  test "to_h returns disable_free_memos_quota from environment config" do
-    Spy.on(Env, :disable_free_memos_quota).and_return(true)
+  test "to_h returns disable_free_ai_analysis from environment config" do
+    Spy.on(Env, :disable_free_ai_analysis).and_return(true)
 
-    assert RemoteConfig.to_h[:disable_free_memos_quota]
+    assert RemoteConfig.to_h[:disable_free_ai_analysis]
   end
 end
