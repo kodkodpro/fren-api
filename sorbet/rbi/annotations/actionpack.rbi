@@ -305,6 +305,10 @@ class ActionDispatch::IntegrationTest
   def cookies; end
 
   # @method_missing: delegated to ActionDispatch::Integration::Session
+  sig { params(path: T.any(String, URI::Generic), args: T.untyped).returns(ActionDispatch::TestResponse) }
+  def options(path, **args); end
+
+  # @method_missing: delegated to ActionDispatch::Integration::Session
   sig { returns(T.nilable(ActionController::Base)) }
   attr_reader :controller
 

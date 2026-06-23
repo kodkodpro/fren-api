@@ -17,6 +17,19 @@ class PaywallsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "fren.pro.monthly", response_json.dig("products", 0, "apple_product_id")
   end
 
+  test "touches last_request_at for authenticated requests" do
+    now = Time.zone.local(2026, 6, 23, 12, 0, 0)
+    paywall = create(:paywall)
+    user = create(:user, paywall:, last_request_at: now - 2.minutes)
+
+    travel_to now do
+      get paywall_url, headers: auth_headers(user)
+    end
+
+    assert_response :success
+    assert_equal now, user.reload.last_request_at
+  end
+
   test "returns exact locale content" do
     paywall = create(
       :paywall,

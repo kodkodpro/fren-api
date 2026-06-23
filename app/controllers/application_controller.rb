@@ -23,7 +23,7 @@ class ApplicationController < ActionController::API
     uuid_regex = /\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/i
     raise Fren::AuthenticationFailedError, "X-User-Id header must be a valid UUID" unless user_id.match?(uuid_regex)
 
-    User.find_or_create_by!(id: user_id)
+    User.find_or_create_by!(id: user_id).tap(&:touch_last_request_at_if_stale)
   end
 
   sig { void }

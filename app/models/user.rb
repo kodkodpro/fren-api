@@ -14,6 +14,20 @@ class User < ApplicationRecord
   # Callbacks
   before_validation :assign_paywall, on: :create
 
+  sig { void }
+  def touch_last_request_at_if_stale
+    now = Time.current
+    rows_updated = self.class
+      .where(id:)
+      .where("last_request_at IS NULL OR last_request_at < ?", now - 1.minute)
+      .update_all(last_request_at: now) # rubocop:disable Rails/SkipsModelValidations -- Keep the stale check atomic.
+
+    return unless rows_updated.positive?
+
+    self.last_request_at = now
+    clear_attribute_change(:last_request_at)
+  end
+
   private
 
   def assign_paywall
