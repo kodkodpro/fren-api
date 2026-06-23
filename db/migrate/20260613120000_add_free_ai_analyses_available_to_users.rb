@@ -15,8 +15,13 @@ class AddFreeAIAnalysesAvailableToUsers < ActiveRecord::Migration[8.1]
 
   def down
     change_table :users, bulk: true do |t|
-      t.remove :free_ai_analyses_available, type: :integer, null: false, default: 3
-      t.integer :free_memos_available, null: false, default: 3
+      if t.column_exists?(:free_ai_analyses_available)
+        t.remove :free_ai_analyses_available, type: :integer, null: false, default: 3
+      end
+
+      unless t.column_exists?(:free_memos_available)
+        t.integer :free_memos_available, null: false, default: 3
+      end
     end
   end
 end
