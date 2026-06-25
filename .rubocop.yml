@@ -2,7 +2,6 @@ require:
   - operandi/rubocop
 
 plugins:
-  - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-performance
   - rubocop-minitest

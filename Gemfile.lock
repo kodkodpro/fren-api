@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/akodkod/operandi.git
-  revision: 8003cbfd863e094f831fd48698123579911201d3
+  revision: 9b917d4b1f41cf555e5b536711bd57d7a0b6c993
   specs:
     operandi (4.0.0)
 
@@ -116,7 +116,7 @@ GEM
       uri (>= 0.13.1)
     addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
-    annotaterb (4.22.0)
+    annotaterb (4.23.0)
       activerecord (>= 6.0.0)
       activesupport (>= 6.0.0)
     ast (2.4.3)
@@ -124,12 +124,12 @@ GEM
     benchmark (0.5.0)
     bigdecimal (4.1.2)
     bindex (0.8.1)
-    bootsnap (1.24.4)
+    bootsnap (1.24.6)
       msgpack (~> 1.2)
-    brakeman (8.0.4)
+    brakeman (8.0.5)
       racc
     builder (3.3.0)
-    bundle_update_interactive (0.13.1)
+    bundle_update_interactive (0.13.2)
       bundler (>= 2, < 5)
       bundler-audit (>= 0.9.1)
       concurrent-ruby (>= 1.3.4)
@@ -244,7 +244,7 @@ GEM
       date
       stringio
     public_suffix (7.0.5)
-    puma (8.0.1)
+    puma (8.0.2)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
@@ -309,7 +309,7 @@ GEM
       io-console (~> 0.5)
     require-hooks (0.4.0)
     rexml (3.4.4)
-    rubocop (1.86.2)
+    rubocop (1.88.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -323,9 +323,6 @@ GEM
     rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-capybara (2.23.0)
-      lint_roller (~> 1.1)
-      rubocop (~> 1.81)
     rubocop-factory_bot (2.28.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
@@ -337,7 +334,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.47.1, < 2.0)
-    rubocop-rails (2.35.2)
+    rubocop-rails (2.35.5)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
@@ -360,29 +357,29 @@ GEM
     rubydex (0.2.3-x86_64-darwin)
     rubydex (0.2.3-x86_64-linux)
     securerandom (0.4.1)
-    sentry-rails (6.5.0)
+    sentry-rails (6.6.2)
       railties (>= 5.2.0)
-      sentry-ruby (~> 6.5.0)
-    sentry-ruby (6.5.0)
+      sentry-ruby (~> 6.6.2)
+    sentry-ruby (6.6.2)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
-    sorbet (0.6.13244)
-      sorbet-static (= 0.6.13244)
+    sorbet (0.6.13312)
+      sorbet-static (= 0.6.13312)
     sorbet-result (1.4.0)
       sorbet-runtime (~> 0.5)
-    sorbet-runtime (0.6.13244)
+    sorbet-runtime (0.6.13312)
     sorbet-schema (0.9.3)
       sorbet-result (~> 1.1)
       sorbet-runtime (~> 0.5)
       sorbet-struct-comparable (~> 1.3)
       zeitwerk (~> 2.6)
-    sorbet-static (0.6.13244-aarch64-linux)
-    sorbet-static (0.6.13244-universal-darwin)
-    sorbet-static (0.6.13244-x86_64-linux)
-    sorbet-static-and-runtime (0.6.13244)
-      sorbet (= 0.6.13244)
-      sorbet-runtime (= 0.6.13244)
+    sorbet-static (0.6.13312-aarch64-linux)
+    sorbet-static (0.6.13312-universal-darwin)
+    sorbet-static (0.6.13312-x86_64-linux)
+    sorbet-static-and-runtime (0.6.13312)
+      sorbet (= 0.6.13312)
+      sorbet-runtime (= 0.6.13312)
     sorbet-struct-comparable (1.3.0)
       sorbet-runtime (>= 0.5)
     spoom (1.7.15)
@@ -458,11 +455,11 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  annotaterb (= 4.22.0)
+  annotaterb (= 4.23.0)
   boba!
-  bootsnap (= 1.24.4)
-  brakeman (= 8.0.4)
-  bundle_update_interactive (= 0.13.1)
+  bootsnap (= 1.24.6)
+  brakeman (= 8.0.5)
+  bundle_update_interactive (= 0.13.2)
   bundler-audit (= 0.9.3)
   debug (= 1.11.1)
   dotenv (= 3.2.0)
@@ -474,26 +471,25 @@ DEPENDENCIES
   nilify_blanks (= 1.4.0)
   operandi!
   pg (= 1.6.3)
-  puma (= 8.0.1)
+  puma (= 8.0.2)
   rack-attack (= 6.8.0)
   rails (= 8.1.3)
   redis (= 5.4.1)
-  rubocop (= 1.86.2)
-  rubocop-capybara (= 2.23.0)
+  rubocop (= 1.88.0)
   rubocop-factory_bot (= 2.28.0)
   rubocop-minitest (= 0.39.1)
   rubocop-performance (= 1.26.1)
-  rubocop-rails (= 2.35.2)
+  rubocop-rails (= 2.35.5)
   rubocop-sane!
   rubocop-sorbet (= 0.12.0)
   rubocop-thread_safety (= 0.7.3)
   ruby-lsp (= 0.26.9)
-  sentry-rails (= 6.5.0)
-  sentry-ruby (= 6.5.0)
+  sentry-rails (= 6.6.2)
+  sentry-ruby (= 6.6.2)
   sorbet-model-attributes!
   sorbet-model-enum!
   sorbet-schema (= 0.9.3)
-  sorbet-static-and-runtime (= 0.6.13244)
+  sorbet-static-and-runtime (= 0.6.13312)
   spy (= 1.0.5)
   tapioca (= 0.19.1)
   thruster (= 0.1.21)
@@ -515,17 +511,17 @@ CHECKSUMS
   activestorage (8.1.3) sha256=0564ce9309143951a67615e1bb4e090ee54b8befed417133cae614479b46384d
   activesupport (8.1.3) sha256=21a5e0dfbd4c3ddd9e1317ec6a4d782fa226e7867dc70b0743acda81a1dca20e
   addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af
-  annotaterb (4.22.0) sha256=66fc40e5f48d5b82ae82013da1e5b43aaaad41ee9bd3d0cf803048efc0a70286
+  annotaterb (4.23.0) sha256=0fc59b1d40e07bec75d9d9b0cd479493631ce8901e4b59fefc561689f22b4600
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
   bigdecimal (4.1.2) sha256=53d217666027eab4280346fba98e7d5b66baaae1b9c3c1c0ffe89d48188a3fbd
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   boba (0.1.6)
-  bootsnap (1.24.4) sha256=a4d939fc2cc5242a83d3a7cb4fb97743ac58475afe91e0600479a3df6f117541
-  brakeman (8.0.4) sha256=7bf921fa9638544835df9aa7b3e720a9a72c0267f34f92135955edd80d4dcf6f
+  bootsnap (1.24.6) sha256=c60bab88c70332290f0a2636a288f675299eb4f804a02a3c085b42eca9da164a
+  brakeman (8.0.5) sha256=03735f9690d3fd4b32d66aacbf0a6d15a84266bdd06b32c05c8ecc8f6021d2be
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
-  bundle_update_interactive (0.13.1) sha256=726d199e99ee2410ddc8387e20778b87619abc33f0fd31d25683873bfbf389ca
+  bundle_update_interactive (0.13.2) sha256=b99fe30d3d3f9e3e6de049b7b741d0e6b9063e0fb72b18fe1981d44976829104
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
   concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
@@ -586,7 +582,7 @@ CHECKSUMS
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
   psych (5.3.1) sha256=eb7a57cef10c9d70173ff74e739d843ac3b2c019a003de48447b2963d81b1974
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
-  puma (8.0.1) sha256=7b94e50c07655718c1fb8ae41a11fc06c7d61293208b3aa608ff71a46d3ad37c
+  puma (8.0.2) sha256=c8ed871dfbbe66448ea9ffd46692342d9804d4071522b52b5331b7b6e7b686fb
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (3.2.6) sha256=5ed78e1f73b2e25679bec7d45ee2d4483cc4146eb1be0264fc4d94cb5ef212c2
   rack-attack (6.8.0) sha256=f2499fdebf85bcc05573a22dff57d24305ac14ec2e4156cd3c28d47cafeeecf2
@@ -608,13 +604,12 @@ CHECKSUMS
   reline (0.6.3) sha256=1198b04973565b36ec0f11542ab3f5cfeeec34823f4e54cebde90968092b1835
   require-hooks (0.4.0) sha256=005f4c6435b4edae73e358cdbaba48370a4121f9ce893d5d2a3c66fce855677d
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
-  rubocop (1.86.2) sha256=bb2e97f635eda42c448f2588f4a6ff78f221b8bdfdf65b1e9b07fbd57521b45d
+  rubocop (1.88.0) sha256=e420ddf1662d0ef34bc8a2910ac4b396a7ddda0b51a708264405241734b08e0b
   rubocop-ast (1.49.1) sha256=4412f3ee70f6fe4546cc489548e0f6fcf76cafcfa80fa03af67098ffed755035
-  rubocop-capybara (2.23.0) sha256=f9ea1ba3a7561ee8e88cf76fc378ce517ce5327155f305ee7b5c2500e5aee357
   rubocop-factory_bot (2.28.0) sha256=4b17fc02124444173317e131759d195b0d762844a71a29fe8139c1105d92f0cb
   rubocop-minitest (0.39.1) sha256=998398d6da4026d297f0f9bf709a1eac5f2b6947c24431f94af08138510cf7ed
   rubocop-performance (1.26.1) sha256=cd19b936ff196df85829d264b522fd4f98b6c89ad271fa52744a8c11b8f71834
-  rubocop-rails (2.35.2) sha256=088865be9675922a5c8f13c00055a71ab768ea5eed211437cffd2a8b46b64ac2
+  rubocop-rails (2.35.5) sha256=f00b3c936002ba8e9ac62e8607c54bb24cda44b36e41b9c7e4f3872e1b0f3fe3
   rubocop-sane (1.0.0)
   rubocop-sorbet (0.12.0) sha256=195521e132500555819313df5accaaf56bf721a63de3e5b7b1d0b25f696b1f39
   rubocop-thread_safety (0.7.3) sha256=067cdd52fbf5deffc18995437e45b5194236eaff4f71de3375a1f6052e48f431
@@ -625,18 +620,18 @@ CHECKSUMS
   rubydex (0.2.3-x86_64-darwin) sha256=de4890f91bedb59bfefb90c528939e52475da3afa105feaf855594ad527b0fb9
   rubydex (0.2.3-x86_64-linux) sha256=796a54c1af9f8868c87bf92fee5f9ccc39ffd40eb8386e0875058a18beb76b09
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
-  sentry-rails (6.5.0) sha256=ebf9d4d82c740c3e0e4a0840f11f7bbd0cf648a30afd9c67e5b50bb07018a0e4
-  sentry-ruby (6.5.0) sha256=3c57ae0d6a017aafcd9ac37114e38149a58534679dec5d4e9e8fc010b85f3a6b
-  sorbet (0.6.13244) sha256=c9d5c571fe9dc5cc2b7219623ad65a1033bb1d0175a477998d87207cb892fe6a
+  sentry-rails (6.6.2) sha256=cb49aa43e6eb235d162d365c671b3fd24b7f9037df59b4a49af5af60868ab1ed
+  sentry-ruby (6.6.2) sha256=a64aaf757d10058598fe5871de925b2a5a3d78273feb9bca23fff843accc6cd6
+  sorbet (0.6.13312) sha256=379e887a191c02efb85e3ae1fb57ff6e06be30b2e95b795bd9de8d4436cb6969
   sorbet-model-attributes (0.1.0)
   sorbet-model-enum (0.1.0)
   sorbet-result (1.4.0) sha256=194eededbcb78cf04ee2db8bd3b19e76f305dc043062ed90c56b4b9eac268ccd
-  sorbet-runtime (0.6.13244) sha256=80f0bf0bf6cff2c874dbd2182329c2b6fd5d6ced60397efca4be1970289e037c
+  sorbet-runtime (0.6.13312) sha256=6e99d3c53b84e1da2b19fab863c6bddbcefa821173dde1906776b517449cf4e3
   sorbet-schema (0.9.3) sha256=ef87356e82c9dff6671e11372a0515f736504e81b2d9753e01c3b79d2530a84b
-  sorbet-static (0.6.13244-aarch64-linux) sha256=80dfc1543a358341d3ac69f10ced72a96e4663ab8c6fdd135658e6723363bf52
-  sorbet-static (0.6.13244-universal-darwin) sha256=2747bf82e57dcf9ad6bec206c627484207c6aa97953fb60597eb2b78fe7bee31
-  sorbet-static (0.6.13244-x86_64-linux) sha256=794d5e15e60cbd97d9517590d5dee40886e2cef2c20e38305aaeea4b527b5668
-  sorbet-static-and-runtime (0.6.13244) sha256=94e6efc75a5562295d33c2d535c393fb1a4ea4569314b5162ec461d68a3a7037
+  sorbet-static (0.6.13312-aarch64-linux) sha256=18d9a96323fc1d53d772a1406923506e8c59d764a90c6d7ceb1a9477394b0de5
+  sorbet-static (0.6.13312-universal-darwin) sha256=b01346ae1bd31594b79ab461a6df945e6896b638ae4c3543e2731123866737ca
+  sorbet-static (0.6.13312-x86_64-linux) sha256=c955da3dbf9f494ed187b4a26ebda857d2c24008c61575094ecc37a8e3a4510e
+  sorbet-static-and-runtime (0.6.13312) sha256=a0f8572bbee80b21e9f2879b9d1a866b67b6ee17227bb49c7888a08bd92bd5f5
   sorbet-struct-comparable (1.3.0) sha256=337aff31c4eda80554485f9a30201067bf54fcd76bd992494a0d8c32fb04036b
   spoom (1.7.15) sha256=39698a3bf7841841ae83c6145d5e008290ddb9433e84d9025e017b915bd36a83
   spy (1.0.5) sha256=babd137834e09fb5e58b8d8bc777649052bc376d9618a4cb34a29e8091aa553c
