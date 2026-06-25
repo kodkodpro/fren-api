@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 module AppStoreAPI
-  PRODUCTION_BASE_URL = "https://api.storekit.itunes.apple.com"
-  SANDBOX_BASE_URL = "https://api.storekit-sandbox.itunes.apple.com"
+  PRODUCTION_BASE_URL = "https://api.storekit.apple.com"
+  SANDBOX_BASE_URL = "https://api.storekit-sandbox.apple.com"
   AUDIENCE = "appstoreconnect-v1"
 
   class << self
