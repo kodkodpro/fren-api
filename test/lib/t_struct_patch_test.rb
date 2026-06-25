@@ -9,6 +9,10 @@ class TStructPatchTest < ActiveSupport::TestCase
     const :age, Integer
   end
 
+  class BooleanStruct < T::Struct
+    const :enabled, T::Boolean
+  end
+
   # deserialize_from!
 
   test "deserialize_from! returns struct from hash" do
@@ -28,6 +32,20 @@ class TStructPatchTest < ActiveSupport::TestCase
 
   test "deserialize_from! raises on invalid input" do
     assert_raises(Typed::Validations::RequiredFieldError) { TestStruct.deserialize_from!(:hash, { name: "Alice" }) }
+  end
+
+  test "deserialize_from! coerces boolean strings with wannabe_bool" do
+    struct = BooleanStruct.deserialize_from!(:hash, { enabled: "true" })
+
+    assert struct.enabled
+  end
+
+  test "deserialize_from! coerces common boolean representations" do
+    assert BooleanStruct.deserialize_from!(:hash, { enabled: "yes" }).enabled
+    assert BooleanStruct.deserialize_from!(:hash, { enabled: "1" }).enabled
+    assert_not BooleanStruct.deserialize_from!(:hash, { enabled: "no" }).enabled
+    assert_not BooleanStruct.deserialize_from!(:hash, { enabled: "0" }).enabled
+    assert_not BooleanStruct.deserialize_from!(:hash, { enabled: "banana" }).enabled
   end
 
   # serialize_to!
