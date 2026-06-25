@@ -4,7 +4,7 @@
 class Paywall::Data < T::Struct
   class Bullet < T::Struct
     const :title, String
-    const :description, String
+    const :description, T.nilable(String), default: nil
     const :icon, String
     const :icon_color, String
   end

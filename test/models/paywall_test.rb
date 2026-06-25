@@ -53,6 +53,27 @@ class PaywallTest < ActiveSupport::TestCase
     assert_equal "fren.pro.monthly", paywall.data.products.first.apple_product_id
   end
 
+  test "serializes bullet without description" do
+    paywall = create(
+      :paywall,
+      data: {
+        locales: {
+          "en" => {
+            title: "Upgrade",
+            bullets: [
+              title: "Unlimited access",
+              icon: "sparkles",
+              icon_color: "#3B82F6",
+            ],
+          },
+        },
+        products: [],
+      },
+    )
+
+    assert_nil paywall.reload.data.locales.fetch("en").bullets.first.description
+  end
+
   test "returns exact locale content" do
     paywall = create(
       :paywall,

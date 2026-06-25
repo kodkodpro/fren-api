@@ -17,6 +17,32 @@ class PaywallsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "fren.pro.monthly", response_json.dig("products", 0, "apple_product_id")
   end
 
+  test "returns bullet without description" do
+    paywall = create(
+      :paywall,
+      data: {
+        locales: {
+          "en" => {
+            title: "Upgrade",
+            bullets: [
+              title: "Unlimited access",
+              icon: "sparkles",
+              icon_color: "#3B82F6",
+            ],
+          },
+        },
+        products: [],
+      },
+    )
+    user = create(:user, paywall:)
+
+    get paywall_url, headers: auth_headers(user)
+
+    assert_response :success
+    assert_equal "Unlimited access", response_json.dig("bullets", 0, "title")
+    assert_nil response_json.dig("bullets", 0, "description")
+  end
+
   test "touches last_request_at for authenticated requests" do
     now = Time.zone.local(2026, 6, 23, 12, 0, 0)
     paywall = create(:paywall)
