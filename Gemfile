@@ -14,7 +14,7 @@ gem "rack-attack", "6.8.0"
 gem "redis", "5.4.1"
 gem "sentry-rails", "6.6.2"
 gem "sentry-ruby", "6.6.2"
-gem "thruster", "0.1.21", require: false
+gem "thruster", "0.1.22", require: false
 gem "wannabe_bool", "0.7.1"
 
 # Custom-made
