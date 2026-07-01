@@ -25,7 +25,7 @@ gem "sorbet-model-enum", github: "akodkod/sorbet-model-enum"
 
 gem "sorbet-schema", "0.9.3"
 gem "sorbet-static-and-runtime", "0.6.13312"
-gem "tapioca", "0.19.1", require: false, group: [:development, :test]
+gem "tapioca", "0.19.2", require: false, group: [:development, :test]
 
 group :development do
   gem "annotaterb", "4.23.0"
